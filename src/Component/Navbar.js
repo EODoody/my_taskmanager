@@ -3,9 +3,8 @@ import "./Navbar.css";
 
 
 
-function Navbar(props) {
-  const loggedIn = props.loggedIn;
-
+function Navbar() {
+  
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <Link className="navbar-brand" to="/">
@@ -41,7 +40,7 @@ function Navbar(props) {
         </li>
       </ul>
       <ul className="navbar-nav ml-auto">
-        {loggedIn ? (
+        {localStorage.getItem('token') ? (
           <>
             <li className="nav-item">
               <Link className="nav-link" to="/dashboard">

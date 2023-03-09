@@ -2,49 +2,58 @@ import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import './Container.css';
 
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect , useState } from "react";
+//import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 
 
-const LoginPage = () => {
+export default function LoginPage() {
   const Navigate = useNavigate();
+  
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-  const [inputs, setInputs] = useState([])
+  const usernameHandler = (event) => {
+    setUsername(event.target.value)
+  }
 
-  const {id} = useParams();
-
-  useEffect(() => {
-    getUser();
-  }, []);
-
- 
-  function getUser() {
-    axios.get(`http://localhost:80/api/users/${id}`).then(function (response) {
-    console.log(response.data);
-    setInputs(response.data);
-
-    });
+  const passwordHandler = (event) => {
+    setPassword(event.target.value)
   }
  
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    axios.put(`http://localhost:80/api/users/${id}/login`, inputs).then(function(response){
-      console.log(response.data);
-      Navigate('/'); //this navigates to the main page
-    });
-    
-    //console.log(inputs);
-    
+  const submitHandler = (event) => {
+    event.preventDefault()
+    loginRequest()
   }
 
-  const handleChange = (event) =>{
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs(values => ({...values, [name]:value}));
+  async function loginRequest() {
+    try {
+      await fetch('http://localhost:80/my-taskmanager/api/login', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+      })
+        .then((respose) => {
+          if (respose.ok) {
+            return respose.json()
+          }
+          throw new Error('error')
+        })
+        .then((data) => {
+          if (data.status) {
+            localStorage.setItem('token', data.status)
+            Navigate('/')
+          } else {
+            //set error
+          }
+        })
+    } catch (error) {
+      console.log(error.message)
+    }
   }
-
 
   
   return (
@@ -52,14 +61,14 @@ const LoginPage = () => {
         <Row className="w-110">
           <Col md={{ span: 5, offset: 1 }} className="my-5">
             <h3 className="mb-3">Log in</h3>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={submitHandler}>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email: </Form.Label>
-                <Form.Control type="email" name='email' placeholder="Enter email" onChange={handleChange}/>
+                <Form.Control type="username" value={username} placeholder="Enter username" onChange={usernameHandler}/>
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password: </Form.Label>
-                <Form.Control type="password" name='password' placeholder="Password" onChange={handleChange}/>
+                <Form.Control type="password" value={password} placeholder="Password" onChange={passwordHandler}/>
               </Form.Group>
               <Button className='proceed-button' variant="primary" type="submit">
                 Flip the page
@@ -71,4 +80,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+

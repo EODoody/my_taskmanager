@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Pages/LoginPage';
 import AboutPage from './Pages/AboutPage';
 import IndexPage from './Pages/IndexPage';
+import AccountConfirm from './Pages/Confirm';
+import Logout from './Component/logout';
 
 
 function App() {
@@ -19,7 +21,8 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/login"  element={<LoginPage />} />
           <Route path="/dashboard"  />
-          <Route path="/logout"  />
+          <Route path="/logout"  element={<Logout/>}/>
+          <Route path="/confirm" element={<AccountConfirm />} />
         </Routes>
       </div>
     </BrowserRouter>

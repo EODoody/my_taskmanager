@@ -3,32 +3,72 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import './Container.css';
 
 import { useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+//import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
 
-const SignupPage = () => {
+export default function SignupPage() {
 
   const Navigate = useNavigate();
-
-  const [inputs, setInputs] = useState({})
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [mobile, setMobile] = useState('')
+  const [password, setPassword] = useState('')
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    axios.post('http://localhost:80/api/users/save', inputs).then(function(response){
-      console.log(response.data);
-      Navigate('/'); //this navigates to the main page
-    });
-    
-    //console.log(inputs);
-    
-  }
-  const handleChange = (event) =>{
-    const name = event.target.name;
-    const value = event.target.value;
-    setInputs(values => ({...values, [name]:value}));
+
+  const usernameHandler = (event) => {
+    setUsername(event.target.value)
   }
 
+  const emailHandler = (event) => {
+    setEmail(event.target.value)
+  }
+
+  const mobileHandler = (event) => {
+    setMobile(event.target.value)
+  }
+
+  const passwordHandler = (event) => {
+    setPassword(event.target.value)
+  }
+
+
+
+  async function registerRequest() {
+    try {
+      await fetch('http://localhost:80/my-taskmanager/api/signup', {
+        method: 'POST',
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          mobile: mobile,
+          password: password
+          
+        }),
+      })
+        .then((respose) => {
+          if (respose.ok) {
+            return respose.json()
+          }
+          throw new Error('error')
+        })
+        .then((data) => {
+          if (data.status) {
+            localStorage.setItem('token', data.status)
+            Navigate('/confirm')
+          } else {
+            //set error
+          }
+        })
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const submitHandler = (event) => {
+    event.preventDefault()
+    registerRequest()
+  }
 
 
   return (
@@ -36,35 +76,31 @@ const SignupPage = () => {
         <Row className="w-110">
           <Col md={{ span: 5, offset: 1 }} className="my-5">
             <h3 className="mb-3">Sign up</h3>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={submitHandler}>
               <Form.Group controlId="formBasicName">
-                <Form.Label>Name</Form.Label>
-                <Form.Control type="text" name="name" placeholder="Enter your name" onChange={handleChange}/>
+                <Form.Label>Username</Form.Label>
+                <Form.Control type="text" value={username} placeholder="Enter your name" onChange={usernameHandler}/>
               </Form.Group>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email address</Form.Label>
-                <Form.Control type="email" name="email" placeholder="Enter email" onChange={handleChange}/>
+                <Form.Control type="email" value={email} placeholder="Enter email" onChange={emailHandler}/>
               </Form.Group>
-              <Form.Group controlId="formBasicEmail">
+              <Form.Group controlId="formBasicMobile">
                 <Form.Label>Mobile number</Form.Label>
-                <Form.Control type="text" name="mobile" placeholder="Enter phone number" onChange={handleChange}/>
+                <Form.Control type="text" value={mobile} placeholder="Enter phone number" onChange={mobileHandler}/>
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" name="password" placeholder="Password" onChange={handleChange}/>
-              </Form.Group>
-              <Form.Group controlId="formBasicConfirmPassword">
-                <Form.Label>Confirm password</Form.Label>
-                <Form.Control type="password" placeholder="Confirm password" />
+                <Form.Control type="password" value={password} placeholder="Password" onChange={passwordHandler}/>
               </Form.Group>
               <Button className='proceed-button' variant="primary" type="submit">
                 SignUp
               </Button>
             </Form>
           </Col>
+          <Link to='/login'>Login</Link>
         </Row>
       </Container>
   );
 };
 
-export default SignupPage;

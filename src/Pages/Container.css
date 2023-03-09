@@ -1,0 +1,16 @@
+.form-container {
+  max-width: 50%;
+  position: absolute;
+  left: 1%;
+  width: auto;
+  border: 2px solid black;
+  top: 25%;
+  width: 35%;
+}
+.proceed-button{
+  margin-top: 20px;
+}
+.w-110 {
+  margin-left: 2%;
+  margin-right: 2%;
+}

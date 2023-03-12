@@ -2,6 +2,7 @@ import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import './Container.css';
 
+
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -63,7 +64,7 @@ export default function LoginPage() {
             <h3 className="mb-3">Log in</h3>
             <Form onSubmit={submitHandler}>
               <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email: </Form.Label>
+                <Form.Label>Username: </Form.Label>
                 <Form.Control type="username" value={username} placeholder="Enter username" onChange={usernameHandler}/>
               </Form.Group>
               <Form.Group controlId="formBasicPassword">

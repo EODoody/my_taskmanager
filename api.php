@@ -57,8 +57,9 @@ if ($action === 'signup') {
             md5($_POST['password'])
         )
     ) {
+        $expiration = time() + (60); // Expires in 1 hour
         $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
-        $payload = ['user' => $user];
+        $payload = ['user' => $user , 'exp' => $expiration];
         $jwt = generate_jwt($headers, $payload);
         return_json(['status' => $jwt]);
     }

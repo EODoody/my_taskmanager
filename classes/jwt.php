@@ -47,8 +47,8 @@ function is_jwt_valid($jwt, $secret = 'secret')
     $signature_provided = getSignature($jwt);
 
     // check the expiration time - note this will cause an error if there is no 'exp' claim in the jwt
-    // $expiration = json_decode($payload)->exp;
-    // $is_token_expired = $expiration - time() < 0;
+    $expiration = json_decode($payload)->exp;
+    $is_token_expired = $expiration - time() < 0;
 
     // build a signature based on the header and payload using the secret
     $base64_url_header = base64url_encode($header);
@@ -64,7 +64,7 @@ function is_jwt_valid($jwt, $secret = 'secret')
     // verify it matches the signature provided in the jwt
     $is_signature_valid = $base64_url_signature === $signature_provided;
 
-    if (/*$is_token_expired || */!$is_signature_valid) {
+    if ($is_token_expired || !$is_signature_valid) {
         return false;
     } else {
         return true;

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styles from './Confirm.module.css'
 
 export default function AccountConfirm() {
   const navigate = useNavigate()
@@ -44,11 +45,17 @@ export default function AccountConfirm() {
   }
 
   return (
-    <form className="register-form" onSubmit={submitHandler}>
-      <h2>Confirm Code</h2>
-      <label>Code</label>
-      <input type="text" value={code} onChange={codeHandler} />
-      <button>Confirm</button>
-    </form>
+    <div className={styles.container}>
+      <div style={{display: "flex"}}> <p>A code has been sent to your email address.
+    Please enter it below to confirm your account.</p></div>
+  
+
+  <form className="register-form" onSubmit={submitHandler}>
+    <h2>Confirm Code</h2>
+    <label>Code</label>
+    <input type="text" value={code} onChange={codeHandler} />
+    <button>Confirm</button>
+  </form>
+</div>
   )
 }

@@ -46,7 +46,7 @@ export default function LoginPage() {
         .then((data) => {
           if (data.status) {
             localStorage.setItem('token', data.status)
-            Navigate('/')
+            
           } else {
             //set error
           }
@@ -54,6 +54,8 @@ export default function LoginPage() {
     } catch (error) {
       console.log(error.message)
     }
+    //idea is to navigate to a loading page and then render the app navbar again when the user is logged in
+    Navigate('/');
   }
 
   

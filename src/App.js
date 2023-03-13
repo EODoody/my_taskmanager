@@ -1,5 +1,5 @@
 import {BrowserRouter, Routes, Route } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Switch } from 'react-router-dom';
 
 
@@ -33,7 +33,8 @@ function App() {
   return (
     <BrowserRouter>
       <div>
-        <Navbar authenticated={authenticated}/>
+        <Suspense> <Navbar authenticated={authenticated}/> </Suspense>
+        
         <Routes>
           <Route exact path="/" element={<IndexPage />} />
           <Route path="/about"  element={<AboutPage />} />

@@ -3,6 +3,9 @@ function generate_jwt($headers, $payload, $secret = 'secret')
 {
     $headers_encoded = base64url_encode(json_encode($headers));
 
+    $payload = array_merge($payload, array(
+        'exp' => time() + 3600 // expiration time is 1 hour from now
+    ));
     $payload_encoded = base64url_encode(json_encode($payload));
 
     $signature = hash_hmac(
@@ -46,7 +49,7 @@ function is_jwt_valid($jwt, $secret = 'secret')
     $payload = base64_decode($tokenParts[1]);
     $signature_provided = getSignature($jwt);
 
-    // check the expiration time - note this will cause an error if there is no 'exp' claim in the jwt
+    // check the expiration time
     $expiration = json_decode($payload)->exp;
     $is_token_expired = $expiration - time() < 0;
 

@@ -1,5 +1,4 @@
 <?php
-
 class Database
 {
     private $server_name = 'localhost';
@@ -18,7 +17,7 @@ class Database
         );
         $this->connection->set_charset('utf8');
         $sql = $this->connection->prepare(
-            'INSERT INTO usertest (`username`, `email`, `mobile` , `password`, `status`, `created_date`) VALUES (?,?,?,?,?,?)'
+            'INSERT INTO usertest (`username`, `email`, `mobile`, `password`, `status`, `created_date`) VALUES (?,?,?,?,?,?)'
         );
         $sql->bind_param(
             'ssssis',
@@ -164,7 +163,6 @@ class Database
         $this->connection->close();
         return false;
     }
-
 
     public function updateUser($user)
     {

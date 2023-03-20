@@ -12,22 +12,23 @@ $is_jwt_valid = isset($bearer_token) ? is_jwt_valid($bearer_token) : false;
 
 $database = new Database();
 
-if ($action === 'register') {
+if ($action === 'signup') {
     $rest_json = file_get_contents('php://input');
     $_POST = json_decode($rest_json, true);
     $user = [
-      'username' => $_POST['username'],
-      'email' => $_POST['email'],
-      'mobile' => $_POST['mobile'],
-      'password' => md5($_POST['password']),
-      'status' => 0,
-      'created_date' => date('Y-m-d H:i:s'),
+        'username' => $_POST['username'],
+        'email' => $_POST['email'],
+        'mobile' => $_POST['mobile'],
+        'password' => md5($_POST['password']),
+        'status' => 0,
+        'created_date' => date('Y-m-d H:i:s'),
     ];
 
     if ($user_id = $database->register($user)) {
         $user['id'] = $user_id;
         if ($code = $database->generateConfirmCode($user_id)) {
-            //send generated code by email to user
+            
+            //to look into sending code on email
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
             $payload = ['user' => $user];
             $jwt = generate_jwt($headers, $payload);
@@ -56,8 +57,9 @@ if ($action === 'register') {
             md5($_POST['password'])
         )
     ) {
+        $expiration = time() + (60); // Expires in 1 hour
         $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
-        $payload = ['user' => $user];
+        $payload = ['user' => $user , 'exp' => $expiration];
         $jwt = generate_jwt($headers, $payload);
         return_json(['status' => $jwt]);
     }
@@ -69,7 +71,8 @@ if ($action === 'register') {
         $generated_password = uniqid(round(11111, 99999));
         $user['password'] = md5($generated_password);
         if ($database->updateUser($user)) {
-            //send password ($generated_password value) to user by email
+
+            //to look into sending password ($generated_password value) to user by email
             return_json(['status' => 1]);
         }
     }

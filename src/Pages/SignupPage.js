@@ -73,7 +73,7 @@ export default function Login() {
       <label>Mobile</label>
       <input type="text" value={mobile} onChange={mobileHandler} />
       <button>Register</button>
-      <Link to="/login">Login</Link>
+      <Link to="/login"><button>Login </button></Link>
     </form>
   )
 }

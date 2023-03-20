@@ -1,27 +1,16 @@
 import { Link } from "react-router-dom";
 import "./Navbar.css";
-
+import React from "react";
 
 function Navbar({ authenticated }) {
   return (
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
         <Link className="navbar-brand" to="/" >
-          <img src="/path/to/your/logo.png" />Day-o
+          <img src="C:\wamp64\www\my-taskmanager\src\Component\image.jpg" alt="Logo "/>Day-o
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ml-auto">
+          <ul className="nav__links navbar-nav ml-auto">
             <li className="nav-item">
               <Link className="nav-link" to="/about">
                 About
@@ -35,22 +24,23 @@ function Navbar({ authenticated }) {
             <li className="nav-item">
               {authenticated ? (
                 <Link className="nav-link" to="/dashboard">
-                  Dashboard
+                 <button> Logout </button>
                 </Link>
               ) : (
-                <Link className="nav-link" to="/login">
-                  Login
+                <Link className="nav-login" to="/login">
+                 <button> Login </button>
                 </Link>
               )}
             </li>
             <li className="nav-item">
               {authenticated ? (
-                <Link className="nav-link" to="/logout">
-                  Logout
+                <Link className="nav-login" to="/logout">
+                 <button> Logout </button>
+                  
                 </Link>
               ) : (
-                <Link className="nav-link" to="/signup">
-                  Sign up
+                <Link className="nav-login" to="/signup">
+                 <button> Sign Up </button>
                 </Link>
               )}
             </li>

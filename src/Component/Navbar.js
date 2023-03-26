@@ -24,7 +24,7 @@ function Navbar({ authenticated }) {
             <li className="nav-item">
               {authenticated ? (
                 <Link className="nav-link" to="/dashboard">
-                 <button> Logout </button>
+                 <button> DashBoard </button>
                 </Link>
               ) : (
                 <Link className="nav-login" to="/login">

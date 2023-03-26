@@ -1,6 +1,6 @@
 import AddTask from "../Component/AddTask"
 import { useState } from "react"
-import ReactModal from "react-modal"
+//import ReactModal from "react-modal"
 
 
 

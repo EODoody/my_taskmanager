@@ -80,6 +80,22 @@ if ($action === 'register') {
             return_json(['status' => $user]);
         }
     }
+} elseif ($action === 'add-task') {
+    if ($is_jwt_valid) {
+      $rest_json = file_get_contents('php://input');
+      $_POST = json_decode($rest_json, true);
+      $task = [
+        'user_id' => getPayload($bearer_token)->user->ID,
+        'title' => $_POST['title'],
+        'description' => $_POST['description'],
+        'created_date' => date('Y-m-d H:i:s'),
+        'completed' => false,
+        'completed_date' => null
+      ];
+      if ($database->addTask($task)) {
+        return_json(['status' => 1]);
+      }
+    }
 }
 return_json(['status' => 0]);
 

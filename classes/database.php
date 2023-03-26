@@ -193,4 +193,29 @@ class Database
         $this->connection->close();
         return false;
     }
+    public function addTask($task) {
+
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+
+
+        $title = $task['title'];
+        $description = $task['description'];
+        $user_id = $task['user_id'];
+        $status = 0;
+        $created_date = date('Y-m-d H:i:s');
+      
+        $stmt = $this->connection->prepare("INSERT INTO tasks (title, description, user_id, status, created_date) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssiss", $title, $description, $user_id, $status, $created_date);
+        $stmt->execute();
+        $stmt->close();
+      
+        return true;
+      }
+  
 }

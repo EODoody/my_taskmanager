@@ -8,12 +8,11 @@ function AddTask({onClose, open}) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
 
-  const submitHandler = async (event) => {
-    event.preventDefault()
-  
-    const bearer_token = localStorage.getItem('jwt')
-  
-    const response = await fetch('https://yourapi.com/add-task', {
+  async function AddTaskRequest(){
+
+    const bearer_token = localStorage.getItem('token');
+    try{
+      await fetch('http://localhost:80/my-taskmanager/api/add-task', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,14 +22,17 @@ function AddTask({onClose, open}) {
         title: title,
         description: description
       })
-    })
-  
-    if (response.ok) {
-      const newTask = await response.json()
-      // Do something with the new task, such as add it to the task list
-    } else {
-      console.error('Failed to add task')
+    });
     }
+    catch (error) {
+      console.log(error.message)
+    }
+  }
+
+
+   const submitHandler = async (event) => {
+    event.preventDefault()
+    AddTaskRequest()
   }
 
 

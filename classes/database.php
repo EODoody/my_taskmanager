@@ -217,5 +217,36 @@ class Database
       
         return true;
       }
-  
+
+      public function Get_Tasks_Fromdb($user_id){
+        $tasks = array();
+    
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+    
+        $stmt = $this->connection->prepare("SELECT * FROM tasks WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result !== false) {
+            while ($row = $result->fetch_assoc()) {
+                $task = array(
+                    "id" => $row["id"],
+                    "title" => $row["title"],
+                    "description" => $row["description"],
+                    "completed" => $row["completed"]
+                );
+                array_push($tasks, $task);
+            }
+        }
+    
+        return $tasks;
+    }
 }
+  
+

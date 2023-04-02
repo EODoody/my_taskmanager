@@ -97,26 +97,27 @@ if ($action === 'register') {
         return_json(['status' => 1]);
       }
     }
-} elseif ($action === 'get-tasks'){
-    if ($is_jwt_valid) {
+} if ($action === 'get-tasks') {
+    if($bearer_token){
+        header("Access-Control-Allow-Origin: http://localhost:3000");
         // Decode the payload of the JWT token
         $payload = getPayload($bearer_token);
 
         // Get the user ID from the payload
         $user_id = $payload->user->ID;
+        
+        // Call the Get_Tasks_Fromdb function to retrieve all tasks for the user
         $tasks = $database->Get_Tasks_Fromdb($user_id);
-
         
         // Return the tasks as JSON
-        return_json(['status' => $tasks]);
+        return_json($tasks);
     }
 }
-     
 return_json(['status' => 0]);
 
 function return_json($arr)
 {
-    header("Access-Control-Allow-Origin: * ");
+    header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
     header("Access-Control-Allow-Headers: Authorization, Content-Type");
     header('Content-Type: application/json; charset=utf-8');

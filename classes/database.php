@@ -239,7 +239,7 @@ class Database
                     "id" => $row["id"],
                     "title" => $row["title"],
                     "description" => $row["description"],
-                    "completed" => $row["completed"]
+                    "status" => $row["status"]
                 );
                 array_push($tasks, $task);
             }
@@ -247,6 +247,7 @@ class Database
     
         return $tasks;
     }
+    
 }
   
 

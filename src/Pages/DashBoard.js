@@ -16,7 +16,7 @@ export default function DashBoard() {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer' + localStorage.getItem('token'),
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
       })
       .then((response) => {
@@ -52,10 +52,9 @@ export default function DashBoard() {
           tasks.map((task) => (
             <Task
               id={task.id}
-              key={task.id}
-              completed={task.data.completed}
-              title={task.data.title} 
-              description={task.data.description}
+              status={task.status}
+              title={task.title} 
+              description={task.description}
             />
           ))
         :

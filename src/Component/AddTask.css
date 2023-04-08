@@ -1,48 +1,35 @@
-.addTask{
+.addTask {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-  z-index: 100;
+  justify-content: center;
+  align-items: center;
 }
 
-.addTask input{
-  height: 40px;
-  border: unset;
-  font-size: 18px;
+.addTask input[type="text"],
+.addTask textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
   box-sizing: border-box;
-  -webkit-box-sizing:border-box;
-  -moz-box-sizing: border-box;
-  border-bottom: 1.5px solid hsl(210, 10%, 75%);
-  padding-left: 5px;
-}
-
-.addTask input:focus{
-  outline: none;
-}
-
-.addTask button {
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: hsl(210, 12%, 15%);
+  font-size: 16px;
 }
 
 .addTask textarea {
-  height: 150px;
-  border-color: hsl(210, 10%, 75%);
-  padding: 5px;
-  font-size: 18px;
+  height: 100px;
 }
 
-.addTask textarea:focus { 
-  outline: none;
+.addTask button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-.addTask button:hover {
-  background-color: hsl(210, 12%, 25%);
-}
-
-.addTask button:active {
-  background-color: hsl(210, 12%, 15%);
+.addTask button[type="submit"]:hover {
+  background-color: #45a049;
 }

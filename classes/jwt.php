@@ -28,6 +28,9 @@ function getSignature($token){
 
 function getPayload($token)
 {
+    if (!$token) {
+        throw new Exception("Invalid token: token is null or undefined");
+    }
 
     $_token=explode(".",$token);
 
@@ -36,9 +39,16 @@ function getPayload($token)
     return $payload;
 }
 
-function base64UrlDecode(string $base64Url): string
+function base64UrlDecode(string $input): string
 {
-    return base64_decode(strtr($base64Url, '-_', '+/'));
+    $input = str_replace('-', '+', $input);
+    $input = str_replace('_', '/', $input);
+    $padding = strlen($input) % 4;
+    if ($padding > 0) {
+        $input .= str_repeat('=', 4 - $padding);
+    }
+    return base64_decode($input);
+    //return base64_decode(strtr($base64Url, '-_', '+/'));
 }
 
 function is_jwt_valid($jwt, $secret = 'secret')

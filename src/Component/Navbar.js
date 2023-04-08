@@ -7,7 +7,7 @@ function Navbar({ authenticated }) {
     <nav className="navbar navbar-expand-lg ">
       <div className="container">
         <Link className="navbar-brand" to="/" >
-          <img src="C:\wamp64\www\my-taskmanager\src\Component\image.jpg" alt="Logo "/>Day-o
+          <img src="#" alt=""/>Day-o
         </Link>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="nav__links navbar-nav ml-auto">

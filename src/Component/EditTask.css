@@ -1,0 +1,30 @@
+.editTask {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editTask input[type="text"],
+.editTask textarea {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.editTask button[type="submit"] {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.editTask button[type="submit"]:hover {
+  background-color: #3e8e41;
+}

@@ -25,6 +25,7 @@ function App() {
       setAuthenticated(true);
     }
   }
+  //how to transmit if a user is logged in or out jwt
 
   useEffect(() => {
     tokenHandler();

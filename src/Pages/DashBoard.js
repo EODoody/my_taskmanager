@@ -39,6 +39,7 @@ export default function DashBoard() {
     useEffect(() => {
       fetchData();
   }, [fetchData]);
+  
 
   return (
     <div className="Tasks_Page"> User dashboard page
@@ -47,19 +48,8 @@ export default function DashBoard() {
           onClick={() => setOpenAddModal(true)}>
           Add task +
         </button>
-     <div className="Tasks_manager">
-        {tasks.length > 0 ?
-          tasks.map((task) => (
-            <Task
-              id={task.id}
-              status={task.status}
-              title={task.title} 
-              description={task.description}
-            />
-          ))
-        :
-          <p>No tasks available</p>
-        }
+        <div className="Tasks_manager">
+        {tasks.length > 0 ? tasks.map((task) => <Task task={task} key={task.id} />) : <p>No tasks available</p>}
       </div>
       <div>
         {openAddModal &&

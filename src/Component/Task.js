@@ -5,8 +5,12 @@ const Task = ({ task }) => {
 
   return (
     <div>
-      <h3>{task.title}</h3>
-      <p>{task.description}</p>
+      <h3>ID: {task.id} - Title: {task.title}</h3>
+      <div>
+        <p>Description: {task.description}</p>
+        <p>Task status: {task.status} </p>
+      </div>
+      
     </div>
   );
 };

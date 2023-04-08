@@ -3,6 +3,7 @@ import {useState} from 'react'
 import "./AddTask.css"
 
 
+
 function AddTask({onClose, open}) {
 
   const [title, setTitle] = useState('')
@@ -54,5 +55,6 @@ function AddTask({onClose, open}) {
   </Modal>
   )
 }
+
 
 export default AddTask

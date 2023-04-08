@@ -1,0 +1,61 @@
+
+.Tasks_Page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AddButton {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.Tasks_Manager {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+p {
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.addTask {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin-top: 20px;
+}
+
+.addTask input, 
+.addTask textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.addTask button {
+  background-color: #2ecc71;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px;
+}

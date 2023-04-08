@@ -16,3 +16,10 @@
   color: hsl(210, 20%, 25%);
 }
 
+
+.task-container{
+  position: relative;
+  display: block;
+  margin: 10px;
+  padding-right: 75%;
+}

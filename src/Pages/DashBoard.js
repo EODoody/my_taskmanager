@@ -1,6 +1,7 @@
 import AddTask from "../Component/AddTask"
 import { useState, useEffect, useCallback } from "react"
-import Task from '../Component/Task'
+import TasksList from "../Component/TasksList"
+import "./Dashboard.css"
 
 //import ReactModal from "react-modal"
 
@@ -44,18 +45,25 @@ export default function DashBoard() {
   return (
     <div className="Tasks_Page"> User dashboard page
 
-        <button 
+        <button className="AddButton"
           onClick={() => setOpenAddModal(true)}>
           Add task +
         </button>
-        <div className="Tasks_manager">
-        {tasks.length > 0 ? tasks.map((task) => <Task task={task} key={task.id} />) : <p>No tasks available</p>}
+        <div className="Tasks_Manager">
+          <h2> To doos: </h2>
+        {tasks.length > 0 ? (
+          <TasksList tasks={tasks} />
+        ) : (
+          <p>No tasks available</p>
+        )}
       </div>
       <div>
+        
         {openAddModal &&
         <AddTask onClose={() => setOpenAddModal(false)} open={openAddModal}/>
         }
       </div>
+      
     </div>
   )
   }

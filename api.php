@@ -113,6 +113,29 @@ if ($action === 'register') {
         return_json($tasks);
     }
 }
+if ($action === 'edit-task') {
+    if ($bearer_token) {
+    header("Access-Control-Allow-Origin: http://localhost:3000");
+
+    $payload = getPayload($bearer_token);
+      $rest_json = file_get_contents('php://input');
+      $_POST = json_decode($rest_json, true);
+     
+      $task_id = $uri[4];
+      $user_id = $payload->user->ID;
+
+      $task = $database->getTask($task_id, $user_id);
+      if ($task && $task['user_id'] == getPayload($bearer_token)->user->ID) {
+
+        $task['title'] = $_POST['title'];
+        $task['description'] = $_POST['description'];
+
+        if ($database->updateTask($task)) {
+          return_json(['status' => 1]);
+        }
+      }
+    }
+  }
 return_json(['status' => 0]);
 
 function return_json($arr)

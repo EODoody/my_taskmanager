@@ -12,6 +12,10 @@ const Task = ({ task, onEdit }) => {
   const handleClose = () => {
     setEditMode(false);
   };
+  const handleTaskEdit = async () => {
+    await onEdit();
+    handleClose();
+  };
 
   return (
     <div className="task-container">
@@ -24,7 +28,7 @@ const Task = ({ task, onEdit }) => {
             open={true}
             onClose={handleClose}
             task={task}
-            onEdit={onEdit}
+            onEdit={handleTaskEdit}
           />
         </div>
       )}

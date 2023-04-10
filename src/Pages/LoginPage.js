@@ -9,7 +9,8 @@ import { useState } from "react";
 
 
 
-export default function LoginPage() {
+export default function LoginPage({handleLogin}) {
+
   const Navigate = useNavigate();
   
   const [username, setUsername] = useState('')
@@ -46,6 +47,7 @@ export default function LoginPage() {
         .then((data) => {
           if (data.status) {
             localStorage.setItem('token', data.status)
+            handleLogin();
             
           } else {
             //set error
@@ -54,7 +56,7 @@ export default function LoginPage() {
     } catch (error) {
       console.log(error.message)
     }
-    //idea is to navigate to a loading page and then render the app navbar again when the user is logged in
+   
     Navigate('/');
   }
 

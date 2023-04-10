@@ -22,6 +22,7 @@ function EditTask({ onClose, open, task, onEdit }) {
           description: description
         })
       });
+      onEdit();
     }
     catch (error) {
       console.log(error.message)
@@ -31,7 +32,6 @@ function EditTask({ onClose, open, task, onEdit }) {
   const submitHandler = async (event) => {
     event.preventDefault()
     await editTaskRequest()
-    //onEdit({ ...task, title, description })
     onClose()
   }
 

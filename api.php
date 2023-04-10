@@ -127,6 +127,8 @@ if ($action === 'edit-task') {
       $task = $database->getTask($task_id, $user_id);
       if ($task && $task['user_id'] == getPayload($bearer_token)->user->ID) {
 
+        //need to understand this more
+
         $task['title'] = $_POST['title'];
         $task['description'] = $_POST['description'];
 

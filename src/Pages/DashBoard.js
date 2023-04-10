@@ -11,7 +11,7 @@ export default function DashBoard() {
   const [openAddModal, setOpenAddModal] = useState(false)
   const [tasks, setTasks] = useState([])
 
-  const fetchData = useCallback(async () => {
+  const fetchData =  useCallback(async () =>  {
     try {
        await fetch(`http://localhost:80/my-taskmanager/api/get-tasks`, {
         method: 'GET',
@@ -40,6 +40,10 @@ export default function DashBoard() {
     useEffect(() => {
       fetchData();
   }, [fetchData]);
+
+  const handleModification = useCallback(() => {
+    fetchData();
+  }, [fetchData]);
   
 
   return (
@@ -52,7 +56,7 @@ export default function DashBoard() {
         <div className="Tasks_Manager">
           <h2> To doos: </h2>
         {tasks.length > 0 ? (
-          <TasksList tasks={tasks} />
+          <TasksList onEdit={handleModification} tasks={tasks} />
         ) : (
           <p>No tasks available</p>
         )}
@@ -60,7 +64,7 @@ export default function DashBoard() {
       <div>
         
         {openAddModal &&
-        <AddTask onClose={() => setOpenAddModal(false)} open={openAddModal}/>
+        <AddTask onTaskAdded={handleModification} onClose={() => setOpenAddModal(false)} open={openAddModal}/>
         }
       </div>
       

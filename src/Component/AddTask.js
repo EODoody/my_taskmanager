@@ -4,7 +4,7 @@ import "./AddTask.css"
 
 
 
-function AddTask({onClose, open}) {
+function AddTask({onClose, open, onTaskAdded}) {
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -24,13 +24,14 @@ function AddTask({onClose, open}) {
         description: description
       })
     });
+    onTaskAdded();
     }
+    
     catch (error) {
       console.log(error.message)
     }
   }
-
-
+  
    const submitHandler = async (event) => {
     event.preventDefault()
     AddTaskRequest()

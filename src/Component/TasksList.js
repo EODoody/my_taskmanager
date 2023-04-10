@@ -1,11 +1,11 @@
 import React from 'react';
 import Task from './Task';
 
-const TasksList = ({ tasks }) => {
+const TasksList = ({ tasks, onEdit }) => {
   return (
     <div>
       {tasks.map((task) => (
-        <Task key={task.id} task={task} />
+        <Task onEdit={onEdit} key={task.id} task={task} />
       ))}
     </div>
   );

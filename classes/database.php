@@ -53,6 +53,7 @@ class Database
             code=?'
         );
         $code = rand(11111, 99999);
+
         $sql->bind_param('iss', $user_id, $code, $code);
         if ($sql->execute()) {
             $sql->close();
@@ -216,6 +217,7 @@ class Database
         $stmt->close();
       
         return true;
+       
       }
 
       public function Get_Tasks_Fromdb($user_id){

@@ -10,6 +10,7 @@ export default function DashBoard() {
  
   const [openAddModal, setOpenAddModal] = useState(false)
   const [tasks, setTasks] = useState([])
+  
 
   const fetchData =  useCallback(async () =>  {
     try {
@@ -49,25 +50,28 @@ export default function DashBoard() {
   return (
     <div className="Tasks_Page"> User dashboard page
 
-        <button className="AddButton"
-          onClick={() => setOpenAddModal(true)}>
-          Add task +
-        </button>
-        <div className="Tasks_Manager">
+      <button className="AddButton" onClick={() => setOpenAddModal(true)}>
+        Add task +
+      </button>
+
+      <br></br>
+
+      <div className="Tasks_Manager">
           <h2> To doos: </h2>
-        {tasks.length > 0 ? (
-          <TasksList onEdit={handleModification} tasks={tasks} />
-        ) : (
-          <p>No tasks available</p>
-        )}
-      </div>
-      <div>
-        
-        {openAddModal &&
-        <AddTask onTaskAdded={handleModification} onClose={() => setOpenAddModal(false)} open={openAddModal}/>
-        }
-      </div>
+    
+      <TasksList tasks={tasks} onEdit={handleModification} />
       
+      {openAddModal && (
+        <AddTask
+          onTaskAdded={handleModification}
+          onClose={() => setOpenAddModal(false)}
+          open={openAddModal}
+        />
+      )}
     </div>
-  )
+    </div>
+    
+  );
   }
+
+

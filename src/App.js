@@ -1,7 +1,5 @@
 import {BrowserRouter, Routes, Route } from 'react-router-dom';
-import React, { useState, useEffect, Suspense } from 'react';
-import { Switch } from 'react-router-dom';
-
+import React, { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './Component/Navbar';
@@ -12,38 +10,39 @@ import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
 import AccountConfirm from './Pages/Confirm';
 import DashBoard from './Pages/DashBoard';
-import Logout from './Component/logout';
 import './App.css'
 
 
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(
+    localStorage.getItem("token") ? true : false
+  );
 
-  const tokenHandler = () => {
-    if (localStorage.getItem('token') !== null) {
-      setAuthenticated(true);
-    }
-  }
-  //how to transmit if a user is logged in or out jwt
+  const handleLogin = () => {
+    setAuthenticated(true);
+  };
 
-  useEffect(() => {
-    tokenHandler();
-  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setAuthenticated(false);
+  };
 
   return (
     <BrowserRouter>
       <div>
-        <Suspense> <Navbar authenticated={authenticated}/> </Suspense>
-        
+      <Navbar authenticated={authenticated} handleLogout={handleLogout} />
         <Routes>
           <Route exact path="/" element={<IndexPage />} />
           <Route path="/about"  element={<AboutPage />} />
           <Route path="/contact"  element={<Contact/>} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/login"  element={<LoginPage />} />
+          <Route
+            path="/login"
+            element={<LoginPage handleLogin={handleLogin} />}
+          />
           <Route path="/dashboard"  element={<DashBoard/>} />
-          <Route path="/logout"  element={<Logout/>} />
+          <Route path="/logout"  element={<IndexPage/>} />
           <Route path="/confirm" element={<AccountConfirm />} />
         </Routes>
       </div>

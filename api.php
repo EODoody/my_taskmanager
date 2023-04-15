@@ -28,7 +28,17 @@ if ($action === 'register') {
     if ($user_id = $database->register($user)) {
         $user['id'] = $user_id;
         if ($code = $database->generateConfirmCode($user_id)) {
-            //send generated code by email to user
+            
+            /* send email with confirmation code
+                $to = $user['email'];
+                $subject = 'Confirmation Code';
+                $message = 'Your confirmation code is: ' . $code;
+                $headers = 'From: your_email@example.com' . "\r\n" .
+                    'Reply-To: david.eduard.olteanu@gmail.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+                mail($to, $subject, $message, $headers); Postfix?*/
+
             $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
             $payload = ['user' => $user];
             $jwt = generate_jwt($headers, $payload);
@@ -112,8 +122,7 @@ if ($action === 'register') {
         // Return the tasks as JSON
         return_json($tasks);
     }
-}
-if ($action === 'edit-task') {
+}else if ($action === 'edit-task') {
     if ($bearer_token) {
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -126,6 +135,8 @@ if ($action === 'edit-task') {
 
       $task = $database->getTask($task_id, $user_id);
       if ($task && $task['user_id'] == getPayload($bearer_token)->user->ID) {
+
+        //need to understand this more
 
         $task['title'] = $_POST['title'];
         $task['description'] = $_POST['description'];

@@ -10,8 +10,9 @@ export default function DashBoard() {
  
   const [openAddModal, setOpenAddModal] = useState(false)
   const [tasks, setTasks] = useState([])
+  
 
-  const fetchData = useCallback(async () => {
+  const fetchData =  useCallback(async () =>  {
     try {
        await fetch(`http://localhost:80/my-taskmanager/api/get-tasks`, {
         method: 'GET',
@@ -40,30 +41,37 @@ export default function DashBoard() {
     useEffect(() => {
       fetchData();
   }, [fetchData]);
+
+  const handleModification = useCallback(() => {
+    fetchData();
+  }, [fetchData]);
   
 
   return (
     <div className="Tasks_Page"> User dashboard page
 
-        <button className="AddButton"
-          onClick={() => setOpenAddModal(true)}>
-          Add task +
-        </button>
-        <div className="Tasks_Manager">
+      <button className="AddButton" onClick={() => setOpenAddModal(true)}>
+        Add task +
+      </button>
+
+      <br></br>
+
+      <div className="Tasks_Manager">
           <h2> To doos: </h2>
-        {tasks.length > 0 ? (
-          <TasksList tasks={tasks} />
-        ) : (
-          <p>No tasks available</p>
-        )}
-      </div>
-      <div>
-        
-        {openAddModal &&
-        <AddTask onClose={() => setOpenAddModal(false)} open={openAddModal}/>
-        }
-      </div>
+    
+      <TasksList tasks={tasks} onEdit={handleModification} />
       
+      {openAddModal && (
+        <AddTask
+          onTaskAdded={handleModification}
+          onClose={() => setOpenAddModal(false)}
+          open={openAddModal}
+        />
+      )}
     </div>
-  )
+    </div>
+    
+  );
   }
+
+

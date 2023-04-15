@@ -1,15 +1,15 @@
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import './Container.css';
-
-
 //import axios from "axios";
+
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 
+export default function LoginPage({handleLogin}) {
 
-export default function LoginPage() {
   const Navigate = useNavigate();
   
   const [username, setUsername] = useState('')
@@ -46,6 +46,7 @@ export default function LoginPage() {
         .then((data) => {
           if (data.status) {
             localStorage.setItem('token', data.status)
+            handleLogin();
             
           } else {
             //set error
@@ -54,7 +55,7 @@ export default function LoginPage() {
     } catch (error) {
       console.log(error.message)
     }
-    //idea is to navigate to a loading page and then render the app navbar again when the user is logged in
+   
     Navigate('/');
   }
 

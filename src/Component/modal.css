@@ -16,7 +16,7 @@
 .modal{
   width: 90%;
   max-width: 500px;
-  border: 5px;
+  border-radius: 10px;
   padding: 20px;
   background-color: white;
   display: flex;
@@ -24,10 +24,6 @@
   align-content: space-between;
   box-sizing: border-box;
   position: relative;
-  top: auto;
-  left: auto;
-  right: auto;
-  bottom: auto;
   margin: auto;
 }
 
@@ -35,21 +31,31 @@
   display: flex;
   justify-content: space-between;
   position: relative;
+  margin-bottom: 20px;
 }
+
 .modal__close {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 10px;
+  right: 10px;
   font-size: 24px;
   font-weight: bold;
   cursor: pointer;
+  color: #444;
+  transition: color 0.3s;
 }
 
-.modal__close:hover{
-  color: hsl(0, 70%, 70%);
+.modal__close:hover {
+  color: #000;
 }
 
 .modal__head h2 {
   font-size: 24px;
   font-weight: bold;
+  margin: 0;
+}
+
+.modal__body {
+  flex-grow: 1;
+  overflow-y: auto;
 }

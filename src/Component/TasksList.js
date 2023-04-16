@@ -2,7 +2,7 @@ import React from 'react';
 import Task from './Task';
 import './TaskList.css';
 
-const TasksList = ({ tasks, onEdit }) => {
+const TasksList = ({ tasks, onEdit, onComplete }) => {
 
   const uncompletedTasks = tasks.filter((task) => task.status === 0);
   const completedTasks = tasks.filter((task) => task.status === 1);
@@ -13,7 +13,7 @@ const TasksList = ({ tasks, onEdit }) => {
         <h2>Uncompleted tasks</h2>
         {uncompletedTasks.length > 0 ? (
           uncompletedTasks.map((task) => (
-            <Task key={task.id} task={task} onEdit={onEdit} />
+            <Task key={task.id} task={task} onEdit={onEdit} onComplete={onComplete} />
           ))
         ) : (
           <p>No uncompleted tasks available</p>
@@ -24,7 +24,7 @@ const TasksList = ({ tasks, onEdit }) => {
         <h2>Completed tasks</h2>
         {completedTasks.length > 0 ? (
           completedTasks.map((task) => (
-            <Task key={task.id} task={task} onEdit={onEdit} />
+            <Task key={task.id} task={task} onEdit={onEdit} onComplete={onComplete}/>
           ))
         ) : (
           <p>No completed tasks available</p>

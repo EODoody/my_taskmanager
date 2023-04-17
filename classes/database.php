@@ -283,6 +283,22 @@ class Database
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+    function deleteCompletedTasks($user_id)
+    {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+        $query ="DELETE FROM tasks WHERE user_id = ? AND status = ?";
+        $stmt = $this->connection->prepare($query);
+        $status = 1;
+        $stmt->bind_param("ii", $user_id, $status);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }
-  
 

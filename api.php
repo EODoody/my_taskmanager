@@ -167,7 +167,28 @@ if ($action === 'register') {
             }
         }
     }
+}elseif ($action === 'delete-completed-tasks') {
+    if($bearer_token){
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+    
+        $payload = getPayload($bearer_token);
+        $user_id = $payload->user->ID;
+    
+        
+        if($database->deleteCompletedTasks($user_id)){
+    
+        $response = array(
+            "success" => true,
+            "message" => "Completed tasks successfully deleted."
+        );
+    
+        echo json_encode($response);
+        }
+    }
+    
 }
+
+
 return_json(['status' => 0]);
 
 function return_json($arr)

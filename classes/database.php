@@ -17,16 +17,18 @@ class Database
         );
         $this->connection->set_charset('utf8');
         $sql = $this->connection->prepare(
-            'INSERT INTO usertest (`username`, `email`, `mobile`, `password`, `status`, `created_date`) VALUES (?,?,?,?,?,?)'
+            'INSERT INTO usertest (`username`, `email`, `mobile`, `password`, `status`, `created_date`, `IsAdmin`, `IsPartOfProject`) VALUES (?,?,?,?,?,?,?,?)'
         );
         $sql->bind_param(
-            'ssssis',
+            'ssssisii',
             $user['username'],
             $user['email'],
             $user['mobile'],
             $user['password'],
             $user['status'],
-            $user['created_date']
+            $user['created_date'],
+            $user['IsAdmin'],
+            $user['IsPartOfProject']
         );
         if ($sql->execute()) {
             $id = $this->connection->insert_id;
@@ -175,15 +177,17 @@ class Database
         );
         $this->connection->set_charset('utf8');
         $sql = $this->connection->prepare(
-            'UPDATE `usertest` SET `username` = ?,`email`=?,`mobile`=?,`password`=? WHERE id=?'
+            'UPDATE `usertest` SET `username` = ?,`email`=?,`mobile`=?,`password`=?, `IsAdmin`=?, `IsPartOfProject`=? WHERE id=?'
         );
         $sql->bind_param(
-            'ssssi',
+            'ssssiii',
             $user['username'],
             $user['email'],
             $user['mobile'],
             $user['password'],
-            $user['id']
+            $user['IsAdmin'],
+            $user['IsPartOfProject'],
+            $user['ID']
         );
         if ($sql->execute()) {
             $sql->close();
@@ -283,6 +287,22 @@ class Database
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+    function deleteCompletedTasks($user_id)
+    {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+        $query ="DELETE FROM tasks WHERE user_id = ? AND status = ?";
+        $stmt = $this->connection->prepare($query);
+        $status = 1;
+        $stmt->bind_param("ii", $user_id, $status);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
 }
-  
 

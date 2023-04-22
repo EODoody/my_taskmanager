@@ -1,14 +1,15 @@
 .task-container {
-  position: relative;
-  display: block;
+  display:inline-block;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin: 10px;
   padding: 20px;
-  width: calc(50% - 20px);
-  float: left;
+  width: calc(100% - 40px);
   box-sizing: border-box;
 }
 
 .card {
+  flex-basis: calc(50% - 5px);
   height: 150px;
   background-color: #f9f9f9;
   border-radius: 5px;
@@ -16,13 +17,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .card h3 {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 600;
   margin: 0;
   color: #333;
+  text-align: center;
 }
 
 .done-button {
@@ -30,6 +35,11 @@
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  margin-top: 15px;
+  padding: 10px 15px;
   cursor: pointer;
+}
+
+.completed .card h3 {
+  text-decoration: line-through;
 }

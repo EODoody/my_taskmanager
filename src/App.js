@@ -11,6 +11,8 @@ import SignupPage from './Pages/SignupPage';
 import AccountConfirm from './Pages/Confirm';
 import DashBoard from './Pages/DashBoard';
 import './App.css'
+import ForgotPassword from './Pages/ForgotPassword';
+import Profile from './Pages/Profile';
 
 
 
@@ -44,6 +46,8 @@ function App() {
           <Route path="/dashboard"  element={<DashBoard/>} />
           <Route path="/logout"  element={<IndexPage/>} />
           <Route path="/confirm" element={<AccountConfirm />} />
+          <Route path='/forgotpassword' element={<ForgotPassword />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
       </BrowserRouter>

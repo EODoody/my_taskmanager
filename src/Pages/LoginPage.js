@@ -2,10 +2,9 @@ import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import './Container.css';
 //import axios from "axios";
-
-
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+
 
 
 export default function LoginPage({handleLogin}) {
@@ -77,6 +76,7 @@ export default function LoginPage({handleLogin}) {
               <Button className='proceed-button' variant="primary" type="submit">
                 Flip the page
               </Button>
+              <Link to="/forgotpassword">Forgot Password?</Link>
             </Form>
           </Col>
         </Row>

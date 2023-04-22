@@ -43,11 +43,13 @@ function EditTask({ onClose, open, task, onEdit }) {
           name='title'
           onChange={(e) => setTitle(e.target.value.toUpperCase())}
           value={title}
-          placeholder='Enter title' />
+          placeholder='Enter title' 
+          maxLength="30"/>
         <textarea
           onChange={(e) => setDescription(e.target.value)}
           placeholder='Enter task decription'
-          value={description}></textarea>
+          value={description}
+          maxLength="254"></textarea>
         <button type='submit'>Submit</button>
       </form>
     </Modal>

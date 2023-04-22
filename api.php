@@ -23,6 +23,8 @@ if ($action === 'register') {
       'password' => md5($_POST['password']),
       'status' => 0,
       'created_date' => date('Y-m-d H:i:s'),
+      'IsAdmin' => 0,
+      'IsPartOfProject' => 0
     ];
 
     if ($user_id = $database->register($user)) {
@@ -76,15 +78,31 @@ if ($action === 'register') {
     $rest_json = file_get_contents('php://input');
     $_POST = json_decode($rest_json, true);
 
-    if ($user = $database->getUserByUsernameOrEmail($_POST['username'])) {
-        $generated_password = uniqid(round(11111, 99999));
-        $user['password'] = md5($generated_password);
-        if ($database->updateUser($user)) {
-            //send password ($generated_password value) to user by email
-            return_json(['status' => 1]);
+    if (isset($_POST['username']) && isset($_POST['newPassword']) && isset($_POST['confirmNewPassword'])) {
+        $username = $_POST['username'];
+        $new_password = $_POST['newPassword'];
+        $confirm_password = $_POST['confirmNewPassword'];
+
+        if ($new_password === $confirm_password) {
+            $user = $database->getUserByUsernameOrEmail($username);
+            if ($user) {
+                $user['password'] = md5($new_password);
+                if ($database->updateUser($user)) {
+                    // send password ($new_password value) to user by email
+                    return_json(['status' => 'success']);
+                } else {
+                    return_json(['status' => 'error', 'message' => 'Failed to update user password.']);
+                }
+            } else {
+                return_json(['status' => 'error', 'message' => 'User not found.']);
+            }
+        } else {
+            return_json(['status' => 'error', 'message' => 'Passwords do not match.']);
         }
+    } else {
+        return_json(['status' => 'error', 'message' => 'Invalid request parameters.']);
     }
-} elseif ($action === 'user') {
+}elseif ($action === 'user') {
     if ($is_jwt_valid) {
         $username = getPayload($bearer_token)->user->username;
         if ($user = $database->getUserByUsernameOrEmail($username)) {
@@ -107,7 +125,7 @@ if ($action === 'register') {
         return_json(['status' => 1]);
       }
     }
-} if ($action === 'get-tasks') {
+}elseif ($action === 'get-tasks') {
     if($bearer_token){
         header("Access-Control-Allow-Origin: http://localhost:3000");
         // Decode the payload of the JWT token
@@ -122,7 +140,7 @@ if ($action === 'register') {
         // Return the tasks as JSON
         return_json($tasks);
     }
-}else if ($action === 'edit-task') {
+}elseif ($action === 'edit-task') {
     if ($bearer_token) {
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -146,7 +164,49 @@ if ($action === 'register') {
         }
       }
     }
-  }
+  }elseif ($action === 'status-update') {
+    if ($bearer_token) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        $payload = getPayload($bearer_token);
+        $rest_json = file_get_contents('php://input');
+        $_POST = json_decode($rest_json, true);
+
+        $task_id = $uri[4];
+        $user_id = $payload->user->ID;
+
+        $task = $database->getTask($task_id, $user_id);
+        if ($task && $task['user_id'] == $payload->user->ID) {
+
+            $task['status'] = $_POST['status'];
+
+            if ($database->updateTask($task)) {
+                return_json(['status' => 1]);
+            }
+        }
+    }
+}elseif ($action === 'delete-completed-tasks') {
+    if($bearer_token){
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+    
+        $payload = getPayload($bearer_token);
+        $user_id = $payload->user->ID;
+    
+        
+        if($database->deleteCompletedTasks($user_id)){
+    
+        $response = array(
+            "success" => true,
+            "message" => "Completed tasks successfully deleted."
+        );
+    
+        echo json_encode($response);
+        }
+    }
+    
+}
+
+
 return_json(['status' => 0]);
 
 function return_json($arr)

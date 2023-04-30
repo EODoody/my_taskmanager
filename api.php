@@ -126,7 +126,7 @@ if ($action === 'register') {
       }
     }
 }elseif ($action === 'get-tasks') {
-    if($bearer_token){
+    if($is_jwt_valid){
         header("Access-Control-Allow-Origin: http://localhost:3000");
         // Decode the payload of the JWT token
         $payload = getPayload($bearer_token);
@@ -141,7 +141,7 @@ if ($action === 'register') {
         return_json($tasks);
     }
 }elseif ($action === 'edit-task') {
-    if ($bearer_token) {
+    if ($is_jwt_valid) {
     header("Access-Control-Allow-Origin: http://localhost:3000");
 
     $payload = getPayload($bearer_token);
@@ -165,7 +165,7 @@ if ($action === 'register') {
       }
     }
   }elseif ($action === 'status-update') {
-    if ($bearer_token) {
+    if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
         $payload = getPayload($bearer_token);
@@ -186,7 +186,7 @@ if ($action === 'register') {
         }
     }
 }elseif ($action === 'delete-completed-tasks') {
-    if($bearer_token){
+    if($is_jwt_valid){
         header("Access-Control-Allow-Origin: http://localhost:3000");
     
         $payload = getPayload($bearer_token);

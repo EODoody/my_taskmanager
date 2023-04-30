@@ -304,5 +304,57 @@ class Database
         $result = $stmt->get_result();
         return $result->fetch_assoc();
     }
+    public function Get_Projects_Fromdb($user_id) {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+
+        $sql = "SELECT p.id, p.name, p.description
+                FROM projects AS p
+                INNER JOIN project_users AS pu ON p.id = pu.project_id
+                WHERE pu.user_id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+      
+        $projects = array();
+        while ($row = $result->fetch_assoc()) {
+          $projects[] = $row;
+        }
+    
+        return $projects;
+      }
+      public function Get_Project_Tasks_Fromdb($project_id)
+        {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
+        // Prepare the SQL statement
+        $stmt = $this->connection->prepare("SELECT * FROM projecttasks WHERE project_id = ?");
+        $stmt->bind_param("i", $project_id);
+
+        // Execute the query
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        $projectTasks = array();
+        while ($row = $result->fetch_assoc()) {
+          $projectTasks[] = $row;
+        }
+       
+       return $projectTasks;
+    }
+
 }
 

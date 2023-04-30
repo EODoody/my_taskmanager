@@ -1,14 +1,16 @@
-import AddTask from "../Component/AddTask";
+import AddTask from "../TasksComponent/AddTask";
 import { useState, useEffect, useCallback } from "react";
-import TasksList from "../Component/TasksList";
+import TasksList from "../TasksComponent/TasksList";
 import "./Dashboard.css";
 import jwt from 'jwt-decode'
+import { useNavigate } from 'react-router-dom';
 
 export default function DashBoard() {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [tasks, setTasks] = useState([]);
   
   const userToken = jwt(localStorage.getItem("token"));
+  
   const isProjectPart = userToken && (userToken.user.IsAdmin === 1 || userToken.user.IsPartOfProject === 1);
 
   const fetchData = useCallback(async () => {
@@ -70,7 +72,11 @@ export default function DashBoard() {
     }
   }
 
-  const goToProjectPage = () => {};
+  const navigate = useNavigate();
+
+  const goToProjectPage = () => {
+    navigate('/projects');
+  };
 
   return (
     <div className="Tasks_Page">

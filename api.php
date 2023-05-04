@@ -9,11 +9,27 @@ $uri = explode('/', $uri);
 $action = $uri[3];
 
 $bearer_token = get_bearer_token();
+
 $is_jwt_valid = isset($bearer_token) ? is_jwt_valid($bearer_token) : false;
 
 $database = new Database();
 
-if ($action === 'register') {
+if ($action === 'refresh-token') {
+    if($is_jwt_valid){
+    header("Access-Control-Allow-Origin: http://localhost:3000");
+    try {
+        $new_jwt = refresh_token($bearer_token, 'betterSecretxD');
+        header('Content-type: application/json');
+        return_json($new_jwt);
+
+    } catch (Exception $e) {
+        http_response_code(401);
+        return_json(array('message' => $e->getMessage()));
+    }
+}
+
+
+}elseif ($action === 'register') {
     $rest_json = file_get_contents('php://input');
     $_POST = json_decode($rest_json, true);
     $user = [

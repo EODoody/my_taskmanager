@@ -1,21 +1,28 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
+import './ProjectDetails.css'
 
-export default function ProjectDetails({ selectedProjectId })  {
+
+export default function ProjectDetails({
+  selectedProjectId,
+  selectedProjectName,
+}) {
   const [projectTasks, setProjectDetails] = useState([]);
 
   const fetchProjectDetails = useCallback(async () => {
     try {
-      if (selectedProjectId) { // Check if selectedProjectId is defined
-        const response = await fetch(`http://localhost:80/my-taskmanager/papi/get-project-details/${selectedProjectId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        });
+      if (selectedProjectId) {
+        const response = await fetch(
+          `http://localhost:80/my-taskmanager/papi/get-project-details/${selectedProjectId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          }
+        );
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
           setProjectDetails(data);
         } else {
           throw new Error("error");
@@ -30,36 +37,106 @@ export default function ProjectDetails({ selectedProjectId })  {
     fetchProjectDetails();
   }, [fetchProjectDetails]);
 
+  // Filter tasks by completion status and user ID
+  const todoTasks = projectTasks.filter(
+    (task) => !task.is_completed && !task.user_id
+  );
+  const inProgressTasks = projectTasks.filter(
+    (task) => !task.is_completed && task.user_id
+  );
+  const completedTasks = projectTasks.filter((task) => task.is_completed);
+
   return (
-    <div>
+    <div className="project-details-container">
+      <h1>{selectedProjectName}</h1>
+
       {projectTasks.length > 0 ? (
         <>
-          <h1>{projectTasks[0].project_name}</h1>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Due Date</th>
-                <th>User ID</th>
-                <th>Is Completed</th>
-              </tr>
-            </thead>
-            <tbody>
-              {projectTasks.map((task) => (
-                <tr key={task.id}>
-                  <td>{task.name}</td>
-                  <td>{task.description}</td>
-                  <td>{task.due_date}</td>
-                  <td>{task.user_id ? task.user_id : '-'}</td>
-                  <td>{task.is_completed ? 'Yes' : 'No'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="tables-container">
+            <div className="table-wrapper todo">
+              <h2>To Do Project Tasks</h2>
+              {todoTasks.length > 0 ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Due Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {todoTasks.map((task) => (
+                      <tr key={task.id}>
+                        <td>{task.name}</td>
+                        <td>{task.description}</td>
+                        <td>{task.due_date}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No To Do Project Tasks</p>
+              )}
+            </div>
+
+            <div className="table-wrapper in-progress">
+              <h2>In Progress Tasks</h2>
+              {inProgressTasks.length > 0 ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Due Date</th>
+                      <th>User ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {inProgressTasks.map((task) => (
+                      <tr key={task.id}>
+                        <td>{task.name}</td>
+                        <td>{task.description}</td>
+                        <td>{task.due_date}</td>
+                        <td>{task.user_id}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No In Progress Tasks</p>
+              )}
+            </div>
+            <div className="table-wrapper completed">
+              <h2>Completed Tasks</h2>
+              {completedTasks.length > 0 ? (
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Due Date</th>
+                      <th>User ID</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {completedTasks.map((task) => (
+                      <tr key={task.id}>
+                        <td>{task.name}</td>
+                        <td>{task.description}</td>
+                        <td>{task.due_date}</td>
+                        <td>{task.user_id}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>No Completed Tasks</p>
+              )}
+            </div>
+          </div>
         </>
       ) : (
-        <p>Loading...</p>
+        <p>No tasks in project</p>
       )}
     </div>
   );

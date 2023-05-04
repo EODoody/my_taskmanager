@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import jwt from 'jwt-decode';
+
+
 import Navbar from './Pages/Navbar';
 import Contact from './Pages/Contact';
 import AboutPage from './Pages/AboutPage';
@@ -15,26 +18,78 @@ import Profile from './Pages/Profile';
 import ProjectsPage from './Pages/ProjectsPage';
 import ProjectsList from './ProjectsComponents/ProjectsList';
 
+
+
 function App() {
 
-  const [authenticated, setAuthenticated] = useState(
-    localStorage.getItem('token') ? true : false
-  );
+  const [authenticated, setAuthenticated] = useState(!!localStorage.getItem('token'));
+  
+
+  const checkTokenExpiration = async() => { 
+    const currentTime = Date.now() / 1000;
+    const tokenDecoded = jwt(localStorage.getItem("token"));
+    const tokenExpiration = tokenDecoded.exp;
+
+
+    if (currentTime >= tokenExpiration) {
+      // Token has expired, log user out
+      handleLogout();
+    } else {
+      
+      try {
+        // Token is still valid, refresh it
+        const response = await fetch('http://localhost:80/my-taskmanager/api/refresh-token', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          const newToken = data;
+          // Update the stored token in localStorage
+          localStorage.setItem('token', newToken);
+          
+        } else {
+          throw new Error("error");
+        }
+      } catch (error) {
+        // Handle error
+        console.log(error.message);
+      }
+    }
+  }
+
+  useEffect(() => {
+    const refreshInterval = setInterval(() => {
+      checkTokenExpiration();
+    }, 1800000); // 30 minutes in milliseconds
+
+    return () => clearInterval(refreshInterval);
+  });
 
   const handleLogin = () => {
     setAuthenticated(true);
+    
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     setAuthenticated(false);
+    
   };
 
 
   const PrivateRoute = ({ children }) => {
-    return authenticated ? children : <Navigate to="/login" />;
+    return authenticated ? (
+      children
+    ) : (
+      <Navigate to="/login" />
+    );
   };
-
+  
 
   return (
     <BrowserRouter>

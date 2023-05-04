@@ -1,5 +1,5 @@
 <?php
-function generate_jwt($headers, $payload, $secret = 'secret')
+function generate_jwt($headers, $payload, $secret = 'betterSecretxD')
 {
     $headers_encoded = base64url_encode(json_encode($headers));
 
@@ -19,6 +19,21 @@ function generate_jwt($headers, $payload, $secret = 'secret')
     $jwt = "$headers_encoded.$payload_encoded.$signature_encoded";
 
     return $jwt;
+}
+function refresh_token($token, $secret) {
+    // Extract the payload from the original JWT
+    $payload = json_decode(base64UrlDecode(explode('.', $token)[1]), true);
+
+    // Set a new expiration time (e.g. 1 hour from now)
+    $payload['exp'] = time() + (60 * 60);
+    
+    $headers = ['alg' => 'HS256', 'typ' => 'JWT'];
+
+    // Encode the updated payload as a new JWT
+    $new_token = generate_jwt($headers, $payload, $secret);
+
+    // Return the new JWT
+    return $new_token;
 }
 
 function getSignature($token){
@@ -51,7 +66,7 @@ function base64UrlDecode(string $input): string
     //return base64_decode(strtr($base64Url, '-_', '+/'));
 }
 
-function is_jwt_valid($jwt, $secret = 'secret')
+function is_jwt_valid($jwt, $secret = 'betterSecretxD')
 {
     // split the jwt
     $tokenParts = explode('.', $jwt);

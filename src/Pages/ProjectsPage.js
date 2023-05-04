@@ -9,23 +9,21 @@ import "./ProjectsPage.css";
 
 export default function ProjectsPage() {
 
-  const [projectDetailsOpen, setProjectDetailsOpen] = useState(false);
-  const [teamMembersOpen, setTeamMembersOpen] = useState(false);
-  const [teamManagementOpen, setTeamManagementOpen] = useState(false);
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
+  const [selectedProjectName, setSelectedProjectName] = useState(null);
 
   useEffect(() => {
     const userToken = jwt(localStorage.getItem("token"));
-    
     if (userToken.user.IsAdmin) {
       setIsAdmin(true);
     }
   }, []);
 
-  const handleProjectSelect = (projectId) => {
+  const handleProjectSelect = (projectId, projectName) => {
     setSelectedProjectId(projectId);
+    setSelectedProjectName(projectName);
   };
 
 
@@ -36,28 +34,26 @@ export default function ProjectsPage() {
 
       {isAdmin && (
         <>
-          <button className="ProjectDetailsButton" onClick={() => setProjectDetailsOpen(true)}>
-            Project Details
+          <button className="ProjectManagement">
+            Project Management
           </button>
 
-          <button className="TeamMembersButton" onClick={() => setTeamMembersOpen(true)}>
-            Team Members
-          </button>
-
-          <button className="TeamManagementButton" onClick={() => setTeamManagementOpen(true)}>
+          <button className="TeamManagement" >
             Team Management
           </button>
 
-          
+          <button className="PTasksManagement" >
+            Project Tasks Management
+          </button>
         </>
       )}
 
-      <div style={{marginTop: "50px"}}>
+      <div style={{marginTop: "50px", marginBottom: "50px"}}>
       <ProjectsList onProjectSelect={handleProjectSelect} />
       <p>Selected Project ID: {selectedProjectId}</p>
       </div>
-      <ProjectDetails selectedProjectId={selectedProjectId} open={projectDetailsOpen} onClose={() => setProjectDetailsOpen(false)} />
-      <TeamMembers open={teamMembersOpen} onClose={() => setTeamMembersOpen(false)} />
+      <ProjectDetails selectedProjectId={selectedProjectId} selectedProjectName={selectedProjectName} />
+      <TeamMembers selectedProjectId={selectedProjectId} />
       
       
     </div>

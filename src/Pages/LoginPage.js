@@ -2,14 +2,13 @@ import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import './Container.css';
 //import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 
 
 
 export default function LoginPage({handleLogin}) {
 
-  const Navigate = useNavigate();
   
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -55,7 +54,7 @@ export default function LoginPage({handleLogin}) {
       console.log(error.message)
     }
    
-    Navigate('/');
+    
   }
 
   
@@ -71,7 +70,7 @@ export default function LoginPage({handleLogin}) {
               </Form.Group>
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password: </Form.Label>
-                <Form.Control type="password" value={password} placeholder="Password" onChange={passwordHandler}/>
+                <Form.Control type="password" value={password} placeholder="Password" onChange={passwordHandler} className="form-control" />
               </Form.Group>
               <Button className='proceed-button' variant="primary" type="submit">
                 Flip the page

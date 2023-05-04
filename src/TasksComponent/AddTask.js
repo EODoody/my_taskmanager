@@ -1,4 +1,4 @@
-import Modal from "./Modal"
+import Modal from "../Pages/Modal"
 import {useState} from 'react'
 import "./AddTask.css"
 

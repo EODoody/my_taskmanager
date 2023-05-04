@@ -15,17 +15,21 @@ $database = new Database();
 
 if ($action === 'get-projects') {
     if ($is_jwt_valid) {
-        
         header("Access-Control-Allow-Origin: http://localhost:3000");
         
         // Decode the payload of the JWT token
         $payload = getPayload($bearer_token);
 
-        // Get the user ID from the payload
+        // Get the user ID and isAdmin flag from the payload
         $user_id = $payload->user->ID;
+        $is_admin = $payload->user->IsAdmin;
 
-        // Call the Get_Projects_Fromdb function to retrieve all projects for the user
-        $projects = $database->Get_Projects_Fromdb($user_id);
+        // Call the Get_Projects_Fromdb function to retrieve all projects for the user or all projects if the user is an admin
+        if ($is_admin) {
+            $projects = $database->Get_Projects_Fromdb(null, true);
+        } else {
+            $projects = $database->Get_Projects_Fromdb($user_id, false);
+        }
         
         // Return the projects as JSON
         return_json($projects);
@@ -41,6 +45,16 @@ else if ($action === 'get-project-details') {
         
 
         return_json($project_details);
+    }
+}else if ($action === 'get-project-team-members') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        $project_id = (int) $uri[4];
+
+        $team_members = $database->Get_Project_Team_Members_Fromdb($project_id);
+        
+        return_json($team_members);
     }
 }
 return_json(['status' => 0]);

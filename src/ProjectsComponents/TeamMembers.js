@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 
-export default function TeamMembers({ selectedProjectId }) {
+export default function TeamMembers({ selectedProjectId, onUpdateTeamMembers  }) {
   const [teamMembers, setTeamMembers] = useState([]);
 
   const fetchTeamMembers = useCallback(async () => {
@@ -21,6 +21,7 @@ export default function TeamMembers({ selectedProjectId }) {
           const data = await response.json();
           console.log(data);
           setTeamMembers(data);
+          onUpdateTeamMembers(data);
         } else {
           throw new Error("error");
         }
@@ -28,7 +29,7 @@ export default function TeamMembers({ selectedProjectId }) {
     } catch (error) {
       console.log(error.message);
     }
-  }, [selectedProjectId]);
+  }, [selectedProjectId,onUpdateTeamMembers]);
 
   useEffect(() => {
     fetchTeamMembers();
@@ -40,9 +41,9 @@ export default function TeamMembers({ selectedProjectId }) {
       {teamMembers.length > 0 ? (
         <>
           <ul>
-            {teamMembers.map((member) => (
-              <li key={member.user_id}>{member.username}</li>
-            ))}
+           {teamMembers.map((member) => (
+            <li key={member.ID}>{member.username}  -- ID: {member.ID}</li>
+        ))}
           </ul>
         </>
       ) : (

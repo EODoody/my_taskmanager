@@ -39,6 +39,7 @@ export default function ProjectList({ onProjectSelect }) {
   const handleProjectClick = (projectId, projectName) => {
     setSelectedProjectId(projectId);
     onProjectSelect(projectId, projectName);
+    
   };
 
   return (

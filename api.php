@@ -40,7 +40,7 @@ if ($action === 'refresh-token') {
       'status' => 0,
       'created_date' => date('Y-m-d H:i:s'),
       'IsAdmin' => 0,
-      'IsPartOfProject' => 0
+      'IsPartOfProject' => $_POST['isPartOfProject']
     ];
 
     if ($user_id = $database->register($user)) {

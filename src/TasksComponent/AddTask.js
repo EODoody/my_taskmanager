@@ -2,8 +2,6 @@ import Modal from "../Pages/Modal"
 import {useState} from 'react'
 import "./AddTask.css"
 
-
-
 function AddTask({onClose, open, onTaskAdded}) {
 
   const [title, setTitle] = useState('')
@@ -11,13 +9,12 @@ function AddTask({onClose, open, onTaskAdded}) {
 
   async function AddTaskRequest(){
 
-    const bearer_token = localStorage.getItem('token');
     try{
       await fetch('http://localhost:80/my-taskmanager/api/add-task', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${bearer_token}`
+        'Authorization': "Bearer " + localStorage.getItem("token")
       },
       body: JSON.stringify({
         title: title,

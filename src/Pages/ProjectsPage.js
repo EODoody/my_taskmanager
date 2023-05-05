@@ -1,25 +1,39 @@
-import { useState, useEffect } from "react";
-//import { Link } from "react-router-dom";
-import ProjectDetails from "../ProjectsComponents/ProjectDetails";
+import { useState, useEffect, useCallback } from "react";
+import PTaskList from "../ProjectsComponents/PTaskList";
 import TeamMembers from "../ProjectsComponents/TeamMembers";
-//import TeamManagement from "../ProjectsComponents/TeamManagement";
 import ProjectsList from "../ProjectsComponents/ProjectsList";
 import jwt from 'jwt-decode'
 import "./ProjectsPage.css";
+import ProjectManagement from "../ProjectsComponents/ProjectManagement";
+import PTasksManagement from "../ProjectsComponents/PTasksManagement";
+import TeamManagement from "../ProjectsComponents/TeamManagement";
 
 export default function ProjectsPage() {
-
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [selectedProjectName, setSelectedProjectName] = useState(null);
+  
+  const [openProjectManagementModal, setOpenProjectManagementModal] = useState(false);
+  const [openTeamManagementModal, setOpenTeamManagementModal] = useState(false);
+  const [openPTasksManagementModal, setOpenPTasksManagementModal] = useState(false);
+
+
+  const [teamMembers, setTeamMembers] = useState([]);
+
+  const updateTeamMembers = useCallback((members) => {
+    setTeamMembers(members);
+  }, []);
 
   useEffect(() => {
     const userToken = jwt(localStorage.getItem("token"));
     if (userToken.user.IsAdmin) {
       setIsAdmin(true);
     }
+
   }, []);
+
+
 
   const handleProjectSelect = (projectId, projectName) => {
     setSelectedProjectId(projectId);
@@ -29,33 +43,38 @@ export default function ProjectsPage() {
 
   return (
     <div className="Projects_Page">
-      
       <h1>Projects Page</h1>
-
       {isAdmin && (
         <>
-          <button className="ProjectManagement">
+           <button className="" onClick={() => setOpenProjectManagementModal(true)}>
             Project Management
           </button>
+          {openProjectManagementModal && (
+              <ProjectManagement onProjectCreated={null} onClose={() => setOpenProjectManagementModal(false)} open={openProjectManagementModal}/>
+          )}
 
-          <button className="TeamManagement" >
+          <button className="TeamManagement" onClick={() => setOpenTeamManagementModal(true)}>
             Team Management
           </button>
+          {openTeamManagementModal && (
+              <TeamManagement onClose={() => setOpenTeamManagementModal(false)} open={openTeamManagementModal} selectedProjectId={selectedProjectId}/>
+          )}
 
-          <button className="PTasksManagement" >
-            Project Tasks Management
+          <button className="" onClick={() => setOpenPTasksManagementModal(true)}>
+            Project Task Management
           </button>
+          {openPTasksManagementModal && (
+              <PTasksManagement selectedProjectId={selectedProjectId} onProjectCreated={null} onClose={() => setOpenPTasksManagementModal(false)} open={openPTasksManagementModal}/>
+          )}
         </>
       )}
 
       <div style={{marginTop: "50px", marginBottom: "50px"}}>
-      <ProjectsList onProjectSelect={handleProjectSelect} />
-      <p>Selected Project ID: {selectedProjectId}</p>
+        <ProjectsList onProjectSelect={handleProjectSelect}  />
+        <h3>Selected Project ID: {selectedProjectId}</h3>
       </div>
-      <ProjectDetails selectedProjectId={selectedProjectId} selectedProjectName={selectedProjectName} />
-      <TeamMembers selectedProjectId={selectedProjectId} />
-      
-      
+      <PTaskList selectedProjectId={selectedProjectId} selectedProjectName={selectedProjectName} teamMembers={teamMembers}/>
+      <TeamMembers selectedProjectId={selectedProjectId} onUpdateTeamMembers={updateTeamMembers}/>
     </div>
   );
 }

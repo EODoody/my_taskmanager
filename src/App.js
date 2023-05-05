@@ -29,7 +29,7 @@ function App() {
     const currentTime = Date.now() / 1000;
     const tokenDecoded = jwt(localStorage.getItem("token"));
     const tokenExpiration = tokenDecoded.exp;
-
+    localStorage.setItem("time",tokenExpiration - currentTime);
 
     if (currentTime >= tokenExpiration) {
       // Token has expired, log user out
@@ -63,10 +63,10 @@ function App() {
   }
 
   useEffect(() => {
+    checkTokenExpiration();
     const refreshInterval = setInterval(() => {
       checkTokenExpiration();
-    }, 1800000); // 30 minutes in milliseconds
-
+    }, 1200000); // 20 minutes in milliseconds
     return () => clearInterval(refreshInterval);
   });
 

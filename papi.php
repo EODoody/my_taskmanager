@@ -34,8 +34,7 @@ if ($action === 'get-projects') {
         // Return the projects as JSON
         return_json($projects);
     }
-}
-else if ($action === 'get-project-details') {
+}else if ($action === 'get-project-details') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -56,9 +55,134 @@ else if ($action === 'get-project-details') {
         
         return_json($team_members);
     }
-}
-return_json(['status' => 0]);
+}else if ($action === 'create-project') {
+    if ($is_jwt_valid) {
+        // Get the request body data
+        $rest_json = file_get_contents('php://input');
+        $_POST = json_decode($rest_json, true);
 
+        // Create a new project object
+        $project = [
+            'name' => $_POST['name'],
+            'description' => $_POST['description'],
+            'start_date' => $_POST['start_date'],
+            'end_date' => $_POST['end_date']
+        ];
+
+        // Call the create_project function to add the project to the database
+        $project_id = $database->Create_Project($project["name"],$project["description"],$project["start_date"],$project["end_date"]);
+
+        // Check if the project was successfully added to the database
+        if ($project_id) {
+            // Return the new project ID as JSON
+            return_json(['project_id' => $project_id]);
+        }
+    }
+}else if ($action === 'ProjectAdd-tasks') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        // Get the request body data
+        $rest_json = file_get_contents('php://input');
+        $_POST = json_decode($rest_json, true);
+
+        $project_id = (int) $uri[4];
+
+        // Create a new task object
+        $task = [
+            'project_id' => $project_id,
+            'name' => $_POST['name'],
+            'description' => $_POST['description'],
+            'due_date' => $_POST['due_date']
+        ];
+
+        // Call the create_task function to add the task to the database
+        $task_id = $database->CreateProject_Task($task["project_id"], $task["name"], $task["description"], $task["due_date"]);
+
+        // Check if the task was successfully added to the database
+        if ($task_id) {
+            // Return the new task ID as JSON
+            return_json(['task_id' => $task_id]);
+        }
+    }
+}else if ($action === 'get-users') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        $users = $database->GetAllUsers();
+
+        return_json($users);
+    }
+
+}else if ($action === 'add-user-to-project') {
+    if ($is_jwt_valid) {
+        // Get the request body data
+        $rest_json = file_get_contents('php://input');
+        $_POST = json_decode($rest_json, true);
+
+        // Get the selected project and user IDs from the request body
+        $selectedProjectId = $_POST['project_id'];
+        $selectedUserId = $_POST['user_id'];
+
+        // Call the add_user_to_project function to add the user to the project
+        $result = $database->Add_User_To_Project($selectedProjectId, $selectedUserId);
+
+        // Check if the user was successfully added to the project
+        if ($result) {
+            // Return success as JSON
+            return_json(['status' => 1]);
+        }
+    }
+}else if ($action === 'delete-task') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        $task_id = (int) $uri[4];
+
+        // Call the delete_task function to delete the task from the database
+        $result = $database->Delete_Project_Task($task_id);
+
+        // Check if the task was successfully deleted from the database
+        if ($result) {
+            // Return success as JSON
+            return_json(['status' => 1]);
+        }
+    }
+}else if ($action === 'assign-user-to-task') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        (int)$task_id = (int) $uri[4];
+
+        // Get the request body data
+        $rest_json = file_get_contents('php://input');
+        $_POST = json_decode($rest_json, true);
+
+        // Get the selected user ID from the request body
+        (int)$selectedUserId = (int)$_POST['assigned_user_id'];
+
+        // Check if the user was successfully assigned to the task
+        if ($database->Assign_User_To_Task($selectedUserId, $task_id)) {
+            // Return success as JSON
+            return_json(['status' => 1]);
+        }
+    }
+}else if ($action === 'complete-task') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        $task_id = (int) $uri[4];
+
+        
+        // Check if the task status was successfully updated in the database
+        if ($database->Complete_Project_Task($task_id)) {
+            // Return success as JSON
+            return_json(['status' => 1]);
+        }
+    }
+}
+
+return_json(['status' => 0]);
 
 
 function return_json($arr)

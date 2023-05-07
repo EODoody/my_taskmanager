@@ -543,7 +543,7 @@ class Database
             $this->database_password,
             $this->database_name
         );
-        $this->connection->set_charset('utf8'); 
+        $this->connection->set_charset('utf8');
 
         // Prepare the SQL statement to update the task with the assigned user ID
         $query = "UPDATE projecttasks SET user_id = ? WHERE id = ?";
@@ -558,28 +558,27 @@ class Database
         return $result;
     }
     function Complete_Project_Task($task_id)
-{
-    $this->connection = new mysqli(
-        $this->server_name,
-        $this->database_username,
-        $this->database_password,
-        $this->database_name
-    );
-    $this->connection->set_charset('utf8'); 
+    {
+        $this->connection = new mysqli(
+            $this->server_name,
+            $this->database_username,
+            $this->database_password,
+            $this->database_name
+        );
+        $this->connection->set_charset('utf8');
 
-    // Prepare the SQL query to update the task
-    $stmt = $this->connection->prepare("UPDATE projecttasks SET is_completed = 1 WHERE id = ?");
+        // Prepare the SQL query to update the task
+        $stmt = $this->connection->prepare("UPDATE projecttasks SET is_completed = 1 WHERE id = ?");
 
-    // Bind the task ID parameter
-    $stmt->bind_param('i', $task_id);
-    // Execute the query
-    if ($stmt->execute()) {
-        $stmt->close();
-        return true;
+        // Bind the task ID parameter
+        $stmt->bind_param('i', $task_id);
+        // Execute the query
+        if ($stmt->execute()) {
+            $stmt->close();
+            return true;
+        }
+
+        // If execution fails or no rows are affected, return false
+        return false;
     }
-
-    // If execution fails or no rows are affected, return false
-    return false;
 }
-}
-

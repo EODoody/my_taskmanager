@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import HandleAsignTask from "./HandleAsignTask";
 import "./PTaskList.css";
+import jwt from "jwt-decode";
 
 export default function ProjectDetails({
   selectedProjectId,
@@ -79,7 +80,9 @@ export default function ProjectDetails({
         // Update the task status in the UI
         setProjectDetails((prevTasks) =>
           prevTasks.map((prevTask) =>
-            prevTask.id === task.id ? { ...prevTask, is_completed: "1" } : prevTask
+            prevTask.id === task.id
+              ? { ...prevTask, is_completed: "1" }
+              : prevTask
           )
         );
       } else {
@@ -90,13 +93,10 @@ export default function ProjectDetails({
     }
   };
 
-
   const handleAssignTaskClose = () => {
     setOpenHandleAsignTask(false);
     fetchProjectDetails();
   };
-
-
 
   // Filter tasks by completion status and user ID
   const todoTasks = projectTasks.filter(
@@ -131,22 +131,27 @@ export default function ProjectDetails({
                         <td>{task.name}</td>
                         <td>{task.description}</td>
                         <td>{task.due_date}</td>
-                        <td>
+                        
+                          {jwt(localStorage.getItem("token")).user.IsAdmin === 1 &&
+
+                          <td>
                           <button onClick={() => handleDeleteTask(task.id)}>
                             Delete
                           </button>
                           <button onClick={() => setOpenHandleAsignTask(true)}>
                             Asign User
                           </button>
+                          </td>
+                          }
                           {openHandleAsignTask && (
                             <HandleAsignTask
                               taskid={task.id}
                               selectedProjectId={selectedProjectId}
-                              onClose={() => handleAssignTaskClose() }
+                              onClose={() => handleAssignTaskClose()}
                               open={openHandleAsignTask}
                             />
                           )}
-                        </td>
+                          
                       </tr>
                     ))}
                   </tbody>
@@ -155,7 +160,6 @@ export default function ProjectDetails({
                 <p>No To Do Project Tasks</p>
               )}
             </div>
-
             <div className="table-wrapper in-progress">
               <h2>In Progress Tasks</h2>
               {inProgressTasks.length > 0 ? (
@@ -175,11 +179,14 @@ export default function ProjectDetails({
                         <td>{task.description}</td>
                         <td>{task.due_date}</td>
                         <td>{task.user_id}</td>
+
+                        {jwt(localStorage.getItem("token")).user.IsAdmin === 1 &&
                         <td>
                           <button onClick={() => handleCompleteTask(task)}>
                             Complete
                           </button>
                         </td>
+                        }
                       </tr>
                     ))}
                   </tbody>
@@ -205,11 +212,13 @@ export default function ProjectDetails({
                         <td>{task.name}</td>
                         <td>{task.description}</td>
                         <td>{task.due_date}</td>
+                        {jwt(localStorage.getItem("token")).user.IsAdmin === 1 &&
                         <td>
                           <button onClick={() => handleDeleteTask(task.id)}>
                             Delete
                           </button>
                         </td>
+}
                       </tr>
                     ))}
                   </tbody>

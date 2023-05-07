@@ -16,7 +16,7 @@ $database = new Database();
 if ($action === 'get-projects') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
-        
+
         // Decode the payload of the JWT token
         $payload = getPayload($bearer_token);
 
@@ -30,32 +30,32 @@ if ($action === 'get-projects') {
         } else {
             $projects = $database->Get_Projects_Fromdb($user_id, false);
         }
-        
+
         // Return the projects as JSON
         return_json($projects);
     }
-}else if ($action === 'get-project-details') {
+} else if ($action === 'get-project-details') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
         $project_id = (int) $uri[4];
 
         $project_details = $database->Get_Project_Tasks_Fromdb($project_id);
-        
+
 
         return_json($project_details);
     }
-}else if ($action === 'get-project-team-members') {
+} else if ($action === 'get-project-team-members') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
         $project_id = (int) $uri[4];
 
         $team_members = $database->Get_Project_Team_Members_Fromdb($project_id);
-        
+
         return_json($team_members);
     }
-}else if ($action === 'create-project') {
+} else if ($action === 'create-project') {
     if ($is_jwt_valid) {
         // Get the request body data
         $rest_json = file_get_contents('php://input');
@@ -70,7 +70,7 @@ if ($action === 'get-projects') {
         ];
 
         // Call the create_project function to add the project to the database
-        $project_id = $database->Create_Project($project["name"],$project["description"],$project["start_date"],$project["end_date"]);
+        $project_id = $database->Create_Project($project["name"], $project["description"], $project["start_date"], $project["end_date"]);
 
         // Check if the project was successfully added to the database
         if ($project_id) {
@@ -78,7 +78,7 @@ if ($action === 'get-projects') {
             return_json(['project_id' => $project_id]);
         }
     }
-}else if ($action === 'ProjectAdd-tasks') {
+} else if ($action === 'ProjectAdd-tasks') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -105,7 +105,7 @@ if ($action === 'get-projects') {
             return_json(['task_id' => $task_id]);
         }
     }
-}else if ($action === 'get-users') {
+} else if ($action === 'get-users') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -113,8 +113,7 @@ if ($action === 'get-projects') {
 
         return_json($users);
     }
-
-}else if ($action === 'add-user-to-project') {
+} else if ($action === 'add-user-to-project') {
     if ($is_jwt_valid) {
         // Get the request body data
         $rest_json = file_get_contents('php://input');
@@ -133,7 +132,7 @@ if ($action === 'get-projects') {
             return_json(['status' => 1]);
         }
     }
-}else if ($action === 'delete-task') {
+} else if ($action === 'delete-task') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -148,7 +147,7 @@ if ($action === 'get-projects') {
             return_json(['status' => 1]);
         }
     }
-}else if ($action === 'assign-user-to-task') {
+} else if ($action === 'assign-user-to-task') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
@@ -167,13 +166,13 @@ if ($action === 'get-projects') {
             return_json(['status' => 1]);
         }
     }
-}else if ($action === 'complete-task') {
+} else if ($action === 'complete-task') {
     if ($is_jwt_valid) {
         header("Access-Control-Allow-Origin: http://localhost:3000");
 
         $task_id = (int) $uri[4];
 
-        
+
         // Check if the task status was successfully updated in the database
         if ($database->Complete_Project_Task($task_id)) {
             // Return success as JSON

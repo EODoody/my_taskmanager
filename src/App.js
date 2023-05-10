@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import jwt from 'jwt-decode';
 
 
@@ -17,13 +17,18 @@ import ForgotPassword from './Pages/ForgotPassword';
 import Profile from './Pages/Profile';
 import ProjectsPage from './Pages/ProjectsPage';
 import ProjectsList from './ProjectsComponents/ProjectsList';
-
-
+import { ThemeProvider } from '@mui/styles';
+import useCustomTheme from './Pages/useCustomTheme';
 
 function App() {
 
   const [authenticated, setAuthenticated] = useState(!!localStorage.getItem('token'));
+
+  const { theme, paletteMode, togglePaletteMode } = useCustomTheme();
   
+  const handleTogglePaletteMode = () => {
+    togglePaletteMode();
+  };
 
   const checkTokenExpiration = async() => { 
     const currentTime = Date.now() / 1000;
@@ -72,7 +77,6 @@ function App() {
 
   const handleLogin = () => {
     setAuthenticated(true);
-    
   };
 
   const handleLogout = () => {
@@ -91,10 +95,11 @@ function App() {
   };
   
 
+
   return (
+    <ThemeProvider theme={theme}>
     <BrowserRouter>
-      <div>
-        <Navbar authenticated={authenticated} handleLogout={handleLogout} />
+        <Navbar authenticated={authenticated} handleLogout={handleLogout} paletteMode={paletteMode} handleTogglePaletteMode={handleTogglePaletteMode}/>
         <Routes>
           <Route exact path="/" element={<IndexPage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -146,8 +151,8 @@ function App() {
           }
         />
         </Routes>
-      </div>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

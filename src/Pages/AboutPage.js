@@ -1,22 +1,63 @@
-import React from 'react';
+import { Container, Grid, Card, CardContent, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.background.default,
+    height: '87.5vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  container: {
+    padding: '24px',
+    borderRadius: '8px',
+    boxShadow: '0 0 8px 0 rgba(0,0,0,0.5)',
+  },
+  aboutText: {
+    color: theme.palette.text.primary,
+    fontSize: '18px',
+  },
+  title: {
+    color: theme.palette.text.primary,
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    borderRadius: '8px',
+    boxShadow: '0 0 8px 0 rgba(0,0,0,0.5)',
+  },
+}));
 
 const AboutPage = () => {
+  const classes = useStyles();
+
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-8">
-          <h1>About Us</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar lectus, non tempus lectus. Nulla suscipit tincidunt libero sit amet eleifend. Sed porttitor urna vel enim posuere vestibulum.</p>
-        </div>
-        <div className="col-md-4">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">Lorem Ipsum</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut sapien eget ligula eleifend vulputate.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className={classes.root}>
+      <Container maxWidth="lg" className={classes.container}>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={8}>
+            <Typography variant="h2" gutterBottom className={classes.title}>About Us</Typography>
+            <Typography variant="body1" className={classes.aboutText}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar lectus, non tempus lectus.
+              Nulla suscipit tincidunt libero sit amet eleifend. Sed porttitor urna vel enim posuere vestibulum.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Card className={classes.card}>
+              <CardContent>
+                <Typography variant="h4" component="h2" gutterBottom>Lorem Ipsum</Typography>
+                <Typography variant="body2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut sapien eget ligula eleifend vulputate.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
     </div>
   );
 };

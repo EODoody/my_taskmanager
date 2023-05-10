@@ -1,30 +1,50 @@
-import React from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import './Container.css';
-//import axios from "axios";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from 'react';
+import {  Grid, Paper, Typography, TextField, Button, Link } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    height: '90vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    padding: '16px',
+    width: '40%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  form: {
+    width: '100%',
+    marginTop: '8px',
+  },
+  submit: {
+    margin: '24px 0px 16px',
+  },
+}));
 
+export default function LoginPage({ handleLogin }) {
+  const classes = useStyles();
 
-export default function LoginPage({handleLogin}) {
-
-  
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const usernameHandler = (event) => {
-    setUsername(event.target.value)
-  }
+    setUsername(event.target.value);
+  };
 
   const passwordHandler = (event) => {
-    setPassword(event.target.value)
-  }
- 
+    setPassword(event.target.value);
+  };
+
   const submitHandler = (event) => {
-    event.preventDefault()
-    loginRequest()
-  }
+    event.preventDefault();
+    loginRequest();
+  };
 
   async function loginRequest() {
     try {
@@ -35,52 +55,72 @@ export default function LoginPage({handleLogin}) {
           password: password,
         }),
       })
-        .then((respose) => {
-          if (respose.ok) {
-            return respose.json()
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
           }
-          throw new Error('error')
+          throw new Error('error');
         })
         .then((data) => {
           if (data.status) {
-            localStorage.setItem('token', data.status)
+            localStorage.setItem('token', data.status);
             handleLogin();
-            
           } else {
-            //set error
+            // set error
           }
-        })
+        });
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-   
-    
   }
 
-  
   return (
-    <Container className="form-container justify-content-start">
-        <Row className="w-110">
-          <Col md={{ span: 5, offset: 1 }} className="my-5">
-            <h3 className="mb-3">Log in</h3>
-            <Form onSubmit={submitHandler}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>Username: </Form.Label>
-                <Form.Control type="username" value={username} placeholder="Enter username" onChange={usernameHandler}/>
-              </Form.Group>
-              <Form.Group controlId="formBasicPassword">
-                <Form.Label>Password: </Form.Label>
-                <Form.Control type="password" value={password} placeholder="Password" onChange={passwordHandler} className="form-control" />
-              </Form.Group>
-              <Button className='proceed-button' variant="primary" type="submit">
-                Flip the page
-              </Button>
-              <Link to="/forgotpassword">Forgot Password?</Link>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+    <div className={classes.root}>
+      <Paper className={classes.paper} elevation={3}>
+        <Typography variant="h4" gutterBottom>
+          Log in
+        </Typography>
+        <form className={classes.form} onSubmit={submitHandler}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            value={username}
+            onChange={usernameHandler}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={passwordHandler}
+          />
+          <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+            Log in
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="/forgotpassword" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="/signup" variant="body2">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </Paper>
+    </div>
   );
-};
-
-
+}

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import EditTask from './EditTask';
 import './task.css';
 
+
 const Task = ({ task, onEdit, onComplete}) => {
   const [editMode, setEditMode] = useState(false);
   const [completed, setCompleted] = useState(false);

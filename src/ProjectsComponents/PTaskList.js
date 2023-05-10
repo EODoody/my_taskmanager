@@ -131,27 +131,28 @@ export default function ProjectDetails({
                         <td>{task.name}</td>
                         <td>{task.description}</td>
                         <td>{task.due_date}</td>
-                        
-                          {jwt(localStorage.getItem("token")).user.IsAdmin === 1 &&
 
+                        {jwt(localStorage.getItem("token")).user.IsAdmin ===
+                          1 && (
                           <td>
-                          <button onClick={() => handleDeleteTask(task.id)}>
-                            Delete
-                          </button>
-                          <button onClick={() => setOpenHandleAsignTask(true)}>
-                            Asign User
-                          </button>
+                            <button onClick={() => handleDeleteTask(task.id)}>
+                              Delete
+                            </button>
+                            <button
+                              onClick={() => setOpenHandleAsignTask(true)}
+                            >
+                              Asign User
+                            </button>
                           </td>
-                          }
-                          {openHandleAsignTask && (
-                            <HandleAsignTask
-                              taskid={task.id}
-                              selectedProjectId={selectedProjectId}
-                              onClose={() => handleAssignTaskClose()}
-                              open={openHandleAsignTask}
-                            />
-                          )}
-                          
+                        )}
+                        {openHandleAsignTask && (
+                          <HandleAsignTask
+                            taskid={task.id}
+                            selectedProjectId={selectedProjectId}
+                            onClose={() => handleAssignTaskClose()}
+                            open={openHandleAsignTask}
+                          />
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -180,13 +181,14 @@ export default function ProjectDetails({
                         <td>{task.due_date}</td>
                         <td>{task.user_id}</td>
 
-                        {jwt(localStorage.getItem("token")).user.IsAdmin === 1 &&
-                        <td>
-                          <button onClick={() => handleCompleteTask(task)}>
-                            Complete
-                          </button>
-                        </td>
-                        }
+                        {jwt(localStorage.getItem("token")).user.IsAdmin ===
+                          1 && (
+                          <td>
+                            <button onClick={() => handleCompleteTask(task)}>
+                              Complete
+                            </button>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>
@@ -212,13 +214,14 @@ export default function ProjectDetails({
                         <td>{task.name}</td>
                         <td>{task.description}</td>
                         <td>{task.due_date}</td>
-                        {jwt(localStorage.getItem("token")).user.IsAdmin === 1 &&
-                        <td>
-                          <button onClick={() => handleDeleteTask(task.id)}>
-                            Delete
-                          </button>
-                        </td>
-}
+                        {jwt(localStorage.getItem("token")).user.IsAdmin ===
+                          1 && (
+                          <td>
+                            <button onClick={() => handleDeleteTask(task.id)}>
+                              Delete
+                            </button>
+                          </td>
+                        )}
                       </tr>
                     ))}
                   </tbody>

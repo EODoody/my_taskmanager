@@ -2,6 +2,58 @@ import React, { useState, useEffect, useCallback } from "react";
 import HandleAsignTask from "./HandleAsignTask";
 import "./PTaskList.css";
 import jwt from "jwt-decode";
+import { makeStyles } from "@mui/styles";
+import {
+  Typography,
+  TableCell,
+  Button,
+  TableRow,
+  TableBody,
+  Table,
+  TableHead,
+} from "@mui/material";
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      fontWeight: "bold",
+      "& .MuiTableCell-head": {
+        fontWeight: "inherit",
+      },
+      "& .MuiTableRow-root:hover": {
+        cursor: "pointer",
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+    todo: {
+      backgroundColor: theme.palette.warning.main,
+      display: "flex",
+      marginTop: theme.spacing(2),
+      width: "100%",
+      justifyContent: "space-between",
+      padding: theme.spacing(2),
+    },
+    inProgress: {
+      backgroundColor: theme.palette.info.main,
+      display: "flex",
+      marginTop: theme.spacing(2),
+      width: "100%",
+      justifyContent: "space-between",
+      padding: theme.spacing(2),
+    },
+    completed: {
+      backgroundColor: theme.palette.success.main,
+      display: "flex",
+      marginTop: theme.spacing(2),
+      width: "100%",
+      justifyContent: "space-between",
+      padding: theme.spacing(2),
+    },
+    tableWrapper: {
+      width: "100%",
+      display:"block",
+    },
+  }));
+
 
 export default function ProjectDetails({
   selectedProjectId,
@@ -107,134 +159,141 @@ export default function ProjectDetails({
   );
   const completedTasks = projectTasks.filter((task) => task.is_completed);
 
+  const classes = useStyles();
   return (
-    <div className="project-details-container">
-      <h1>{selectedProjectName}</h1>
-
+    <div className={classes.root}>
+      <Typography variant="h3">Selected project name: {selectedProjectName}</Typography>
       {projectTasks.length > 0 ? (
         <>
           <div className="tables-container">
-            <div className="table-wrapper todo">
-              <h2>To Do Project Tasks</h2>
-              {todoTasks.length > 0 ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Due Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {todoTasks.map((task) => (
-                      <tr key={task.id}>
-                        <td>{task.name}</td>
-                        <td>{task.description}</td>
-                        <td>{task.due_date}</td>
 
+            <div className={`${classes.tableWrapper} ${classes.todo}`}>
+              <Typography variant="h3">To Do Project Tasks</Typography>
+              {todoTasks.length > 0 ? (
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Description</TableCell>
+                      <TableCell>Due Date</TableCell>
+                      {jwt(localStorage.getItem("token")).user.IsAdmin ===
+                        1 && <TableCell>Action</TableCell>}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {todoTasks.map((task) => (
+                      <TableRow key={task.id}>
+                        <TableCell>{task.name}</TableCell>
+                        <TableCell>{task.description}</TableCell>
+                        <TableCell>{task.due_date}</TableCell>
                         {jwt(localStorage.getItem("token")).user.IsAdmin ===
                           1 && (
-                          <td>
-                            <button onClick={() => handleDeleteTask(task.id)}>
+                          <TableCell>
+                            <Button onClick={() => handleDeleteTask(task.id)}>
                               Delete
-                            </button>
-                            <button
+                            </Button>
+                            <Button
                               onClick={() => setOpenHandleAsignTask(true)}
                             >
-                              Asign User
-                            </button>
-                          </td>
+                              Assign User
+                            </Button>
+                            {openHandleAsignTask && (
+                              <HandleAsignTask
+                                taskid={task.id}
+                                selectedProjectId={selectedProjectId}
+                                onClose={() => handleAssignTaskClose()}
+                                open={openHandleAsignTask}
+                              />
+                            )}
+                          </TableCell>
                         )}
-                        {openHandleAsignTask && (
-                          <HandleAsignTask
-                            taskid={task.id}
-                            selectedProjectId={selectedProjectId}
-                            onClose={() => handleAssignTaskClose()}
-                            open={openHandleAsignTask}
-                          />
-                        )}
-                      </tr>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
+                  </TableBody>
+                </Table>
               ) : (
-                <p>No To Do Project Tasks</p>
+                <Typography variant="body1">No To Do Project Tasks</Typography>
               )}
             </div>
-            <div className="table-wrapper in-progress">
-              <h2>In Progress Tasks</h2>
+            <div className={`${classes.tableWrapper} ${classes.inProgress}`}>
+              <Typography variant="h3">In Progress Tasks</Typography>
               {inProgressTasks.length > 0 ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Due Date</th>
-                      <th>Asigned to</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Description</TableCell>
+                      <TableCell>Due Date</TableCell>
+                      <TableCell>Assigned to</TableCell>
+                      {jwt(localStorage.getItem("token")).user.IsAdmin ===
+                        1 && <TableCell>Action</TableCell>}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
                     {inProgressTasks.map((task) => (
-                      <tr key={task.id}>
-                        <td>{task.name}</td>
-                        <td>{task.description}</td>
-                        <td>{task.due_date}</td>
-                        <td>{task.user_id}</td>
-
+                      <TableRow key={task.id}>
+                        <TableCell>{task.name}</TableCell>
+                        <TableCell>{task.description}</TableCell>
+                        <TableCell>{task.due_date}</TableCell>
+                        <TableCell>{task.user_id}</TableCell>
                         {jwt(localStorage.getItem("token")).user.IsAdmin ===
                           1 && (
-                          <td>
-                            <button onClick={() => handleCompleteTask(task)}>
+                          <TableCell>
+                            <Button onClick={() => handleCompleteTask(task)}>
                               Complete
-                            </button>
-                          </td>
+                            </Button>
+                          </TableCell>
                         )}
-                      </tr>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
+                  </TableBody>
+                </Table>
               ) : (
-                <p>No In Progress Tasks</p>
+                <Typography variant="body1">No In Progress Tasks</Typography>
               )}
             </div>
-            <div className="table-wrapper completed">
-              <h2>Completed Tasks</h2>
+            
+            <div className={`${classes.tableWrapper} ${classes.completed}`}>
+            <Typography variant="h3">Completed Tasks</Typography>
               {completedTasks.length > 0 ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                      <th>Due Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Description</TableCell>
+                      <TableCell>Due Date</TableCell>
+                      {jwt(localStorage.getItem("token")).user.IsAdmin ===
+                        1 && <TableCell>Action</TableCell>}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
                     {completedTasks.map((task) => (
-                      <tr key={task.id}>
-                        <td>{task.name}</td>
-                        <td>{task.description}</td>
-                        <td>{task.due_date}</td>
+                      <TableRow key={task.id}>
+                        <TableCell>{task.name}</TableCell>
+                        <TableCell>{task.description}</TableCell>
+                        <TableCell>{task.due_date}</TableCell>
                         {jwt(localStorage.getItem("token")).user.IsAdmin ===
                           1 && (
-                          <td>
-                            <button onClick={() => handleDeleteTask(task.id)}>
+                          <TableCell>
+                            <Button onClick={() => handleDeleteTask(task.id)}>
                               Delete
-                            </button>
-                          </td>
+                            </Button>
+                          </TableCell>
                         )}
-                      </tr>
+                      </TableRow>
                     ))}
-                  </tbody>
-                </table>
+                  </TableBody>
+                </Table>
               ) : (
-                <p>No Completed Tasks</p>
+                <Typography variant="body1">No Completed Tasks</Typography>
               )}
             </div>
           </div>
         </>
       ) : (
-        <p>No tasks in project</p>
+        <Typography variant="body1">No tasks in project</Typography>
       )}
     </div>
   );
 }
+

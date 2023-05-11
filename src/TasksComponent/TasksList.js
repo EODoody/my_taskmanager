@@ -7,6 +7,8 @@ const useStyles = makeStyles((theme) => ({
   Tasks_List: {
     display: 'flex',
     justifyContent: 'space-between',
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
   },
   
   column: {

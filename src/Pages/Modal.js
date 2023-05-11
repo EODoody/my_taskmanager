@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
-
   modal: {
     position: 'fixed',
     top: 0,
@@ -29,26 +28,25 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: -1, 
+    zIndex: -1,
   },
   modalContent: {
     background: theme.palette.background.default,
-    color: theme.palette.text.primary,
-    borderRadius: '4px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-    maxWidth: '500px',
-    width: '100%',
+    borderRadius: '10px',
+    boxShadow: '0px 4px 30px rgba(0, 0, 0, 0.1)',
+    maxWidth: '90vw',
+    width: '500px',
     maxHeight: '90vh',
     overflowY: 'auto',
-    border: '1px solid #ccc',
+    padding: '30px',
+    border: `1px solid ${theme.palette.grey[300]}`,
   },
   modalHeader: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '16px',
-    borderBottom: '1px solid #ccc',
-    
+    paddingBottom: '20px',
+    borderBottom: `1px solid ${theme.palette.grey[300]}`,
   },
   modalTitle: {
     margin: 0,
@@ -71,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#333',
   },
   modalBody: {
-    padding: '16px',
+    paddingTop: '20px',
   },
 }));
 

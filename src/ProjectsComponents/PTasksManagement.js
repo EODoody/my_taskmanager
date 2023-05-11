@@ -30,6 +30,7 @@ function ProjectTasksManagement({ onClose, open, selectedProjectId, onProjectTas
   const submitHandler = async (event) => {
     event.preventDefault();
     createProjectTask();
+    onClose();
   }
 
   return (

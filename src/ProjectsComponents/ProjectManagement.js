@@ -11,20 +11,21 @@ function ProjectManagement({ onClose, open, onProjectCreated }) {
 
   async function CreateProject(){
     try{
-      await fetch('http://localhost:80/my-taskmanager/papi/create-project', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': "Bearer " + localStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        name: name,
-        description: description,
-        start_date: startDate,
-        end_date: endDate
-      })
-    });
-    onProjectCreated();
+      const response = await fetch('http://localhost:80/my-taskmanager/papi/create-project', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': "Bearer " + localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+          name: name,
+          description: description,
+          start_date: startDate,
+          end_date: endDate
+        })
+      });
+      const newProject = await response.json();
+      onProjectCreated(newProject);
     }
     catch (error) {
       console.log(error.message)
@@ -34,6 +35,7 @@ function ProjectManagement({ onClose, open, onProjectCreated }) {
    const submitHandler = async (event) => {
     event.preventDefault()
     CreateProject()
+    onClose();
   }
 
   return (

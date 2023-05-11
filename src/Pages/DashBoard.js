@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   addButton: {
     marginTop: '20px',
     padding: '10px',
-    backgroundColor: '#2ecc71',
+    backgroundColor: theme.palette.primary.main,
     border: 'none',
     borderRadius: '5px',
     color: '#fff',
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
   goToProject: {
     marginTop: '20px',
     padding: '10px',
-    backgroundColor: '#3498db',
     border: 'none',
     borderRadius: '5px',
     color: '#fff',
@@ -52,15 +51,15 @@ const useStyles = makeStyles((theme) => ({
   tasksManager: {
     background: theme.palette.background.default,
     color: theme.palette.text.primary,
-    marginTop: '20px',
     border: '1px solid #ccc',
-    padding: '20px',
+    margin: theme.spacing(2), 
     borderRadius: '5px',
     width: '90%',
   },
   heading: {
-    
-    marginTop: '0',
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    marginTop: "20px",
   },
   addTask: {
     display: 'flex',
@@ -77,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
   },
   addButtonModal: {
-    backgroundColor: '#2ecc71',
+    backgroundColor: theme.palette.primary.main,
     border: 'none',
     borderRadius: '5px',
     color: '#fff',
@@ -171,6 +170,7 @@ export default function DashBoard() {
   return (
     <div className={classes.root}>
       <Typography variant="h1">User dashboard page</Typography>
+      <div style={{display: "flex"}}>
 
       <Button className={classes.addButton} onClick={() => setOpenAddModal(true)}>
         Add task +
@@ -185,8 +185,9 @@ export default function DashBoard() {
           Go to project
         </Button>
       )}
+      </div>
 
-      <br />
+    
 
       <Paper className={classes.tasksManager}>
         <Typography variant="h2" className={classes.heading}>

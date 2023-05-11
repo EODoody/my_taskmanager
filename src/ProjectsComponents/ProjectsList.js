@@ -1,9 +1,35 @@
+import { Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import React, { useState, useEffect } from "react";
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(2),
+  },
+  tableHeader: {
+    backgroundColor: theme.palette.primary.main,
+  },
+  tableHeaderText: {
+    color: theme.palette.common.white,
+  },
+  tableRow: {
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+  selectedTableRow: {
+    backgroundColor: theme.palette.action.selected,
+  },
+}));
+
 
 export default function ProjectList({ onProjectSelect }) {
   const [projects, setProjects] = useState([]);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const classes = useStyles();
 
   useEffect(() => {
     // Only fetch projects if isAdmin value has been set
@@ -39,46 +65,52 @@ export default function ProjectList({ onProjectSelect }) {
   const handleProjectClick = (projectId, projectName) => {
     setSelectedProjectId(projectId);
     onProjectSelect(projectId, projectName);
-    
   };
 
-  return (
-    <div>
-      <h2>Projects List</h2>
+ return (
+    <Paper className={classes.root}>
+      <Typography variant="h4" component="h2">
+        Projects List
+      </Typography>
       {isLoading ? (
-        <p>Loading...</p>
+        <Typography>Loading...</Typography>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table>
+          <TableHead>
+            <TableRow className={classes.tableHeader}>
+              <TableCell className={classes.tableHeaderText}>ID</TableCell>
+              <TableCell className={classes.tableHeaderText}>Name</TableCell>
+              <TableCell className={classes.tableHeaderText}>
+                Description
+              </TableCell>
+              <TableCell className={classes.tableHeaderText}>
+                Start Date
+              </TableCell>
+              <TableCell className={classes.tableHeaderText}>
+                End Date
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {projects.map((project) => (
-              <tr
+              <TableRow
                 key={project.id}
                 onClick={() => handleProjectClick(project.id, project.name)}
-                style={{
-                  cursor: "pointer",
-                  backgroundColor:
-                    project.id === selectedProjectId ? "lightblue" : "#f5f5f5",
-                }}
+                className={`${classes.tableRow} ${
+                  project.id === selectedProjectId ? classes.selectedTableRow : ""
+                }`}
               >
-                <td>{project.id}</td>
-                <td>{project.name}</td>
-                <td>{project.description}</td>
-                <td>{project.start_date}</td>
-                <td>{project.end_date}</td>
-              </tr>
+                <TableCell>{project.id}</TableCell>
+                <TableCell>{project.name}</TableCell>
+                <TableCell>{project.description}</TableCell>
+                <TableCell>{project.start_date}</TableCell>
+                <TableCell>{project.end_date}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       )}
-    </div>
+    </Paper>
   );
 }
+

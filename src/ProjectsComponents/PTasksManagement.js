@@ -21,7 +21,9 @@ function ProjectTasksManagement({ onClose, open, selectedProjectId, onProjectTas
           due_date: dueDate
         })
       });
+      //window.location.reload(); // Refresh the page
       onProjectTaskCreated();
+      
     } catch (error) {
       console.log(error.message)
     }

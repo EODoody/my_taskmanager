@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#fff',
     fontSize: '16px',
     cursor: 'pointer',
+    
   },
   clearButton: {
     marginTop: '20px',
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     cursor: 'pointer',
     marginLeft: '10px',
+    
   },
   goToProject: {
     marginTop: '20px',
@@ -47,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     cursor: 'pointer',
     marginLeft: '10px',
+    
   },
   tasksManager: {
     background: theme.palette.background.default,
@@ -170,19 +173,19 @@ export default function DashBoard() {
   return (
     <div className={classes.root}>
       <Typography variant="h1">User dashboard page</Typography>
-      <div style={{display: "flex"}}>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
 
-      <Button className={classes.addButton} onClick={() => setOpenAddModal(true)}>
-        Add task +
+      <Button className={classes.addButton} onClick={() => setOpenAddModal(true)}  variant="outlined" >
+      <strong>Add Task +</strong>
       </Button>
 
-      <Button className={classes.clearButton} onClick={() => showClearCompletedAlert()}>
-        Clear completed
+      <Button className={classes.clearButton} onClick={() => showClearCompletedAlert()}  variant="outlined">
+      <strong>Clear Completed</strong>
       </Button>
 
       {isProjectPart && (
-        <Button className={classes.goToProject} onClick={() => goToProjectPage()}>
-          Go to project
+        <Button className={classes.goToProject} onClick={() => goToProjectPage()}  variant="outlined">
+          <strong>Go to project</strong>
         </Button>
       )}
       </div>

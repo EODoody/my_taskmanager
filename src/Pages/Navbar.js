@@ -55,7 +55,7 @@ function Navbar({ authenticated, handleLogout, paletteMode, handleTogglePaletteM
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Link to="/" className={classes.link}>
           <Typography variant="h4" component="div" sx={{ flexGrow: 1, color: "#fff" }}>
-            Day-o
+          <img src={require('../Pages/image.jpg')} alt="Logo" style={{ height: '40px' }} />Day-o
           </Typography>
         </Link>
 

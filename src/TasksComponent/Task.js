@@ -61,6 +61,7 @@ const Task = ({ task, onEdit, onComplete}) => {
       if (response.ok) {
         setCompleted(true)
         onComplete(task);
+        console.log(completed)
       } else {
         console.error('Failed to update task status');
       }

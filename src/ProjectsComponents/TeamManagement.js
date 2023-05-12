@@ -41,6 +41,7 @@ function TeamManagement({ onClose, open, selectedProjectId }) {
         }
         const data = await response.json();
         setUsers(data);
+        
       } catch (error) {
         console.log(error.message);
       }
@@ -75,7 +76,9 @@ function TeamManagement({ onClose, open, selectedProjectId }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     addUserToProject();
+    window.location.reload(); // Refresh the page
     onClose();
+    
   };
 
   const handleSelectChange = (event) => {

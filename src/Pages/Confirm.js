@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     background: theme.palette.background.default,
     color: theme.palette.text.primary,
   },
@@ -24,12 +28,13 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    width: '40%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 }));
+
 
 export default function AccountConfirm() {
   const navigate = useNavigate();
@@ -74,27 +79,32 @@ export default function AccountConfirm() {
   };
 
   return (
-    <form className={classes.form} onSubmit={submitHandler}>
-      <Paper className={classes.paper} elevation={3}>
-      <Typography variant="h2" className={classes.title}>
-        Confirm Code
-      </Typography>
-      <TextField
-        type="text"
-        value={code}
-        onChange={codeHandler}
-        className={classes.textField}
-        label="Code"
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        className={classes.button}
-      >
-        Confirm
-      </Button>
-      </Paper>
-    </form>
+    <div className={classes.root}>
+      <form className={classes.form} onSubmit={submitHandler}>
+        <Paper className={classes.paper} elevation={3}>
+          <Typography variant="h2" className={classes.title}>
+            Confirm Code
+          </Typography>
+          <Typography variant="h6" className={classes.title}>
+            A confirmation code has been sent to your email (not)
+          </Typography>
+          <TextField
+            type="text"
+            value={code}
+            onChange={codeHandler}
+            className={classes.textField}
+            label="Code"
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Confirm
+          </Button>
+        </Paper>
+      </form>
+    </div>
   );
 }

@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   buttonContainer: {
+    
     alignItems: "center",
-    marginTop: theme.spacing(14),
+    marginTop: theme.spacing(13),
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(10),
     flexDirection: "column",
@@ -30,7 +31,9 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "bold",
       alignItems: "center",
       display: "block",
-      marginBottom: theme.spacing(7),
+      marginBottom: theme.spacing(4),
+      marginLeft: theme.spacing(7),
+      
     },
   },
   listContainer: {
@@ -38,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
+    
   },
 }));
 
@@ -45,11 +49,9 @@ export default function ProjectsPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [selectedProjectName, setSelectedProjectName] = useState(null);
-  const [openProjectManagementModal, setOpenProjectManagementModal] =
-    useState(false);
+  const [openProjectManagementModal, setOpenProjectManagementModal] = useState(false);
   const [openTeamManagementModal, setOpenTeamManagementModal] = useState(false);
-  const [openPTasksManagementModal, setOpenPTasksManagementModal] =
-    useState(false);
+  const [openPTasksManagementModal, setOpenPTasksManagementModal] = useState(false);
   const [teamMembers, setTeamMembers] = useState([]);
 
   const updateTeamMembers = useCallback((members) => {
@@ -68,97 +70,124 @@ export default function ProjectsPage() {
     setSelectedProjectName(projectName);
   };
 
-  const [projects, setProjects] = useState([]); //For adding new projects
 
-  function handleProjectCreated(newProject) {
-    setProjects([...projects, newProject]);
-  }
+
+
+
+  const handleDeleteProject = (projectId) => {
+    // Make an API call to delete the project
+    fetch(`http://localhost:80/my-taskmanager/papi/delete-project/${selectedProjectId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Unable to delete project");
+        }
+        window.location.reload(); // Refresh the page
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
 
   const classes = useStyles();
-  return (
-    <div className={`Projects_Page ${classes.root}`}>
-      <div
-  style={{
-    display: "flex",
-    justifyContent: "space-between",
-  }}
->
-  <div style={{ width: "70%" }}>
-    <Typography variant="h3">Project Dashboard</Typography>
-    <Typography variant="subtitle1">
-      Welcome, {jwt(localStorage.getItem("token")).user.username}!
-    </Typography>
-    {selectedProjectId ? null : (
-  <Typography variant="subtitle2">
-    Click on a project row to display more tasks
-  </Typography>
-)}
-    <ProjectsList onProjectSelect={handleProjectSelect} />
-  </div>
-  <div style={{ width: "30%"}}>
-  {isAdmin && (
-  <div className={classes.buttonContainer}>
-    <Button
-      variant="contained"
-      className={classes.button}
-      onClick={() => setOpenProjectManagementModal(true)}
+return (
+  <div className={`Projects_Page ${classes.root}`}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+      }}
     >
-      Project Management
-    </Button>
-    {openProjectManagementModal && (
-      <ProjectManagement
-        onProjectCreated={handleProjectCreated}
-        onClose={() => setOpenProjectManagementModal(false)}
-        open={openProjectManagementModal}
-      />
-    )}
+      <div style={{ width: "70%" }}>
+        <Typography variant="h3">Project Dashboard</Typography>
+        <Typography variant="subtitle1">
+          Welcome, {jwt(localStorage.getItem("token")).user.username}!
+        </Typography>
+        {selectedProjectId ? null : (
+          <Typography variant="subtitle2">
+            Click on a project row to display more tasks
+          </Typography>
+        )}
+        <ProjectsList onProjectSelect={handleProjectSelect} />
+      </div>
+      <div style={{ width: "30%", zIndex:"20" }}>
+        {isAdmin && (
+          <div className={classes.buttonContainer}>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={() => setOpenProjectManagementModal(true)}
+            >
+              Project Management
+            </Button>
+            {openProjectManagementModal && (
+              <ProjectManagement
+                
+                onClose={() => setOpenProjectManagementModal(false)}
+                open={openProjectManagementModal}
+              />
+            )}
 
-    <Button
-      variant="contained"
-      className={classes.button}
-      onClick={() => setOpenTeamManagementModal(true)}
-    >
-      Team Management
-    </Button>
-    {openTeamManagementModal && (
-      <TeamManagement
-        onClose={() => setOpenTeamManagementModal(false)}
-        open={openTeamManagementModal}
-        selectedProjectId={selectedProjectId}
-      />
-    )}
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={() => setOpenTeamManagementModal(true)}
+            >
+              Team Management
+            </Button>
+            {openTeamManagementModal && (
+              <TeamManagement
+                onClose={() => setOpenTeamManagementModal(false)}
+                open={openTeamManagementModal}
+                selectedProjectId={selectedProjectId}
+              />
+            )}
 
-    <Button
-      variant="contained"
-      className={classes.button}
-      onClick={() => setOpenPTasksManagementModal(true)}
-    >
-      Project Task Management
-    </Button>
-    {openPTasksManagementModal && (
-      <PTasksManagement
-        selectedProjectId={selectedProjectId}
-        onProjectCreated={null}
-        onClose={() => setOpenPTasksManagementModal(false)}
-        open={openPTasksManagementModal}
-      />
-    )}
-  </div>
-)}
-</div>
-</div>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={() => setOpenPTasksManagementModal(true)}
+            >
+              Project Task Management
+            </Button>
+            {openPTasksManagementModal && (
+              <PTasksManagement
+                selectedProjectId={selectedProjectId}
+                onProjectCreated={null}
+                onClose={() => setOpenPTasksManagementModal(false)}
+                open={openPTasksManagementModal}
+              />
+            )}
 
-      <div className={classes.listContainer}>
-        <PTaskList
-          selectedProjectId={selectedProjectId}
-          selectedProjectName={selectedProjectName}
-          teamMembers={teamMembers}
-        />
-        <TeamMembers
-          selectedProjectId={selectedProjectId}
-          onUpdateTeamMembers={updateTeamMembers}
-        />
+            {selectedProjectId && (
+              <Button
+                variant="contained"
+                className={classes.button}
+                onClick={handleDeleteProject}
+              >
+                Delete Project
+              </Button>
+            )}
+          </div>
+        )}
       </div>
     </div>
-  );
-}
+
+    <div className={classes.listContainer}>
+      <PTaskList
+        selectedProjectId={selectedProjectId}
+        selectedProjectName={selectedProjectName}
+        teamMembers={teamMembers}
+      />
+      <TeamMembers
+        selectedProjectId={selectedProjectId}
+        onUpdateTeamMembers={updateTeamMembers}
+      />
+    </div>
+  </div>
+); }

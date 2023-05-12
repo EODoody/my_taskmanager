@@ -581,4 +581,29 @@ class Database
         // If execution fails or no rows are affected, return false
         return false;
     }
+    public function Delete_Project($project_id)
+{
+    $this->connection = new mysqli(
+        $this->server_name,
+        $this->database_username,
+        $this->database_password,
+        $this->database_name
+    );
+    $this->connection->set_charset('utf8');
+
+    // Prepare the SQL query to delete the project
+    $stmt = $this->connection->prepare("DELETE FROM projects WHERE id = ?");
+
+    // Bind the project ID parameter
+    $stmt->bind_param('i', $project_id);
+
+    // Execute the query
+    if ($stmt->execute()) {
+        $stmt->close();
+        return true;
+    }
+
+    // If execution fails or no rows are affected, return false
+    return false;
+}
 }

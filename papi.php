@@ -179,6 +179,18 @@ if ($action === 'get-projects') {
             return_json(['status' => 1]);
         }
     }
+} else if ($action === 'delete-project') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        $project_id = (int)$uri[4];
+
+        // Check if the project was successfully deleted from the database
+        if ($database->Delete_Project($project_id)) {
+            // Return success as JSON
+            return_json(['status' => 1]);
+        }
+    }
 }
 
 return_json(['status' => 0]);

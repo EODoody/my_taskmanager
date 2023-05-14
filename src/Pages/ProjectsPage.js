@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   buttonContainer: {
-    
     alignItems: "center",
     marginTop: theme.spacing(13),
     marginBottom: theme.spacing(2),
@@ -41,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
+    height:"50vh",
     
   },
 }));

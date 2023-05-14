@@ -194,7 +194,7 @@ export default function DashBoard() {
 
       <Paper className={classes.tasksManager}>
         <Typography variant="h2" className={classes.heading}>
-          To doos:
+          Task List:
         </Typography>
 
         <TasksList tasks={tasks} onEdit={handleModification} onComplete={handleModification} />

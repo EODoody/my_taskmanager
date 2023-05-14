@@ -15,10 +15,10 @@ const useCustomTheme = () => {
     palette: {
       mode: paletteMode,
       primary: {
-        main: '#2196f3', // Blue
+        main: '#3f51b5', 
       },
       secondary: {
-        main: '#ff9800', // Orange
+        main: '#82488c', // Orange
       },
       background: {
         default: paletteMode === 'light' ? '#F1F6F9' : '#212A3E',

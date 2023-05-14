@@ -4,9 +4,8 @@ import { Typography } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     height: "100vh",
-    paddingTop: "20px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -15,50 +14,39 @@ const useStyles = makeStyles((theme) => ({
   },
   backgroundImage: {
     position: "fixed",
-
     top: 0,
-    left: "-100%",
-    width: "300%",
-    height: "100%",
-    backgroundImage:
-      theme.palette.mode === "dark"
-        ? `url(${require("./dark.png")})`
-        : `url(${require("./light.png")})`,
-    backgroundSize: "auto",
-    backgroundRepeat: "repeat",
-    animation: "$scrollBg 60s linear infinite",
+    backgroundImage: theme.palette.index.default,
     zIndex: -1,
-  },
-  "@keyframes scrollBg": {
-    from: {
-      transform: "translateX(-30%)",
-    },
-    to: {
-      transform: "translateX(30%)", // Adjust the value to transform the image off-screen
-    },
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
   },
   paper: {
     padding: theme.spacing(3),
-    backgroundColor: 'rgba(128, 128, 128, 0.7)',
+    backgroundColor: 'rgba(128, 128, 128, 0)',
     width: '50%',
     height: '40%',
     marginRight: '30%',
     fontWeight: 'bold',
     zIndex: 2,
-    marginLeft: '15%',
+    marginLeft: '-10%',
     borderRadius: '5%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'left',
+    alignItems: 'left',
   },
   boldBlackText: {
     fontWeight: 'bold',
-    color: '#fff', // White text color
     flexGrow: 1, // Fill the available space vertically
-    textAlign: 'center',
     fontSize: '1.5rem', // Adjust the value based on your needs
+    color: theme.palette.primary.main,
 },
+  AccentText: { 
+    color: theme.palette.secondary.main,
+  }
 }));
 
 const IndexPage = () => {
@@ -67,20 +55,22 @@ const IndexPage = () => {
   return (
     <div className={classes.root}>
       <div className={classes.paper}>
-        <Typography variant="h2" gutterBottom className={classes.boldBlackText}>
-          Day-O
+        <Typography variant="h1" gutterBottom className={classes.boldBlackText}>
+         <strong>DAY-<span
+    className={classes.AccentText}
+  >O</span> </strong> 
         </Typography>
-
+        <Typography variant="h3" className={classes.boldBlackText}>
+         Create tasks asign them, and organise your life.
+        </Typography>
+        <Typography variant="h3" className={classes.AccentText}>
+          All in ONE PLACE.
+        </Typography>
+        <br></br>
+        <br></br>
         <Typography variant="h5" className={classes.boldBlackText}>
           Day-O is a powerful solution to procrastination and a good task
           management tool designed to help you stay organized and productive.
-        </Typography>
-        <Typography variant="h5" className={classes.boldBlackText}>
-          With Day-O, you can create tasks, assign them to team members, set
-          deadlines, and track progress.
-        </Typography>
-        <Typography variant="h5" className={classes.boldBlackText}>
-          All in one place.
         </Typography>
       </div>
 

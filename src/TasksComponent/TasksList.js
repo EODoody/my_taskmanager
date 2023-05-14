@@ -5,10 +5,16 @@ import Task from './Task';
 
 const useStyles = makeStyles((theme) => ({
   Tasks_List: {
+    color: theme.palette.primary.main,
+    zIndex: -1,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage: theme.palette.background.default,
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    
   },
   
   column: {
@@ -17,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'auto',
     padding: '16px',
     backgroundColor: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     border: `1px solid ${theme.palette.divider}`,
     borderRadius: '4px',
   },

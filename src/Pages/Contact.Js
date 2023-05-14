@@ -11,12 +11,17 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage: theme.palette.background.default,
     color: theme.palette.text.primary,
-    height: "88vh",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    zIndex:-1,
+    width: '100vw',
+    height: '100vh',
   },
   paper: {
     padding: theme.spacing(3),

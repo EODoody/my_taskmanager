@@ -12,19 +12,22 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    boxShadow: "none",
+  },
+  toolbar: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
   },
   link: {
     textDecoration: "none",
     color: theme.palette.mode === "dark" ? "#fff" : "#000",
-    marginLeft: "2rem",
+    marginLeft: "rem",
   },
   button: {
-    flex: 1, // to occupy more space
     alignSelf: "center",
     paddingBottom: "10px",
     marginLeft: "20%",
+    color: theme.palette.mode === "dark" ? "#fff" : "#000",
   },
   paletteModeButton: {
     display: "inline-block",
@@ -52,10 +55,10 @@ function Navbar({ authenticated, handleLogout, paletteMode, handleTogglePaletteM
 
   return (
     <AppBar position="static" className={classes.appBar}>
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+      <Toolbar className={classes.toolbar} sx={{ justifyContent: "space-between" }}>
         <Link to="/" className={classes.link}>
           <Typography variant="h4" component="div" sx={{ flexGrow: 1, color: "#fff" }}>
-          <img src={require('../Pages/image.jpg')} alt="Logo" style={{ height: '40px' }} />Day-o
+          <img src={require('../Pages/image.jpg')} alt="Logo" style={{ height: '50px' }} /> <strong>Day-o</strong>
           </Typography>
         </Link>
 

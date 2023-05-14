@@ -3,10 +3,15 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    
-    color: theme.palette.text.primary,
-    backgroundColor: theme.palette.background.default,
-    height: '87.5vh',
+  
+    color: theme.palette.primary.main,
+    zIndex: -1,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage: theme.palette.background.default,
+    width: '100vw',
+    height: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -17,11 +22,11 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0 0 8px 0 rgba(0,0,0,0.5)',
   },
   aboutText: {
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     fontSize: '18px',
   },
   title: {
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
   },
   card: {
     height: '100%',

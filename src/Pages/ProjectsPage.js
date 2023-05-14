@@ -8,15 +8,20 @@ import PTasksManagement from "../ProjectsComponents/PTasksManagement";
 import TeamManagement from "../ProjectsComponents/TeamManagement";
 import { makeStyles } from "@mui/styles";
 import { Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    backgroundImage: theme.palette.background.default,
+    color: theme.palette.primary.main,
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    padding: theme.spacing(2),
+    zIndex: -1,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+   
   },
   buttonContainer: {
     alignItems: "center",
@@ -40,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
     color: theme.palette.text.primary,
-    height:"50vh",
+    height:"60vh",
     
   },
 }));
@@ -94,6 +99,7 @@ export default function ProjectsPage() {
       });
   };
 
+  const navigate = useNavigate();
   const classes = useStyles();
 return (
   <div className={`Projects_Page ${classes.root}`}>
@@ -173,6 +179,14 @@ return (
                 Delete Project
               </Button>
             )}
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={() => navigate("/analytics")}
+            >
+              Analytics Page
+            </Button>
+            
           </div>
         )}
       </div>

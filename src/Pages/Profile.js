@@ -6,15 +6,19 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   profile: {
-  background: theme.palette.background.default,
-  color: theme.palette.text.primary,
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  padding: "24px",
-  height: '85.5vh',
- 
-},
+    backgroundImage: theme.palette.background.default,
+    width: "100vw",
+    height: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: theme.palette.text.primary,
+    flexDirection: "column",
+    padding: "24px",
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  },
   heading: {
     marginBottom: "24px",
     fontWeight: "bold",
@@ -52,9 +56,7 @@ export default function Profile() {
             <Typography variant="body1" className={classes.label}>
               Username:
             </Typography>
-            <Typography variant="body1">
-              {userToken.user.username}
-            </Typography>
+            <Typography variant="body1">{userToken.user.username}</Typography>
           </div>
           <div className={classes.userInfo}>
             <Typography variant="body1" className={classes.label}>

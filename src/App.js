@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
+import { ThemeProvider } from '@mui/styles';
 import jwt from 'jwt-decode';
 
 
@@ -12,13 +12,16 @@ import LoginPage from './Pages/LoginPage';
 import SignupPage from './Pages/SignupPage';
 import AccountConfirm from './Pages/Confirm';
 import DashBoard from './Pages/DashBoard';
-import './App.css';
 import ForgotPassword from './Pages/ForgotPassword';
 import Profile from './Pages/Profile';
 import ProjectsPage from './Pages/ProjectsPage';
 import ProjectsList from './ProjectsComponents/ProjectsList';
-import { ThemeProvider } from '@mui/styles';
 import useCustomTheme from './Pages/useCustomTheme';
+import AnalyticsPage from './Pages/AnalyticsPage';
+
+
+
+
 
 function App() {
 
@@ -101,7 +104,8 @@ function App() {
     <BrowserRouter>
         <Navbar authenticated={authenticated} handleLogout={handleLogout} paletteMode={paletteMode} handleTogglePaletteMode={handleTogglePaletteMode}/>
         <Routes>
-          <Route exact path="/" element={<IndexPage />} />
+          
+          <Route exact path="/" element={ <ThemeProvider theme={theme}><IndexPage /></ThemeProvider>} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -147,6 +151,14 @@ function App() {
             element={
             <PrivateRoute>
               <ProjectsList />
+            </PrivateRoute>
+          }
+        />
+        <Route
+            path="/analytics"
+            element={
+            <PrivateRoute>
+              <AnalyticsPage/>
             </PrivateRoute>
           }
         />

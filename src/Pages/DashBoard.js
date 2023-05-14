@@ -11,10 +11,16 @@ import { Button, Paper, Typography } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    zIndex: -1,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
   },
  
   addButton: {
@@ -53,16 +59,22 @@ const useStyles = makeStyles((theme) => ({
   },
   tasksManager: {
     background: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     border: '1px solid #ccc',
     margin: theme.spacing(2), 
     borderRadius: '5px',
     width: '90%',
   },
   heading: {
-    background: theme.palette.background.default,
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main,
     marginTop: "20px",
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundImage: theme.palette.background.default,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   addTask: {
     display: 'flex',
@@ -172,7 +184,7 @@ export default function DashBoard() {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h1">User dashboard page</Typography>
+      <Typography variant="h2">User dashboard page</Typography>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
 
       <Button className={classes.addButton} onClick={() => setOpenAddModal(true)}  variant="outlined" >
@@ -193,7 +205,7 @@ export default function DashBoard() {
     
 
       <Paper className={classes.tasksManager}>
-        <Typography variant="h2" className={classes.heading}>
+        <Typography variant="h3" className={classes.heading}>
           Task List:
         </Typography>
 

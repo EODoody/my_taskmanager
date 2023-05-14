@@ -5,6 +5,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 const useStyles = makeStyles((theme) => ({
   teamMembersContainer: {
+    color: theme.palette.primary.main,
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",

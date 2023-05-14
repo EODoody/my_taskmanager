@@ -15,13 +15,16 @@ const useCustomTheme = () => {
     palette: {
       mode: paletteMode,
       primary: {
-        main: '#3f51b5', 
+        main: paletteMode === 'light' ? '#ffffff' : '#000000',
       },
       secondary: {
-        main: '#82488c', // Orange
+        main: paletteMode === 'light' ? '#1596FF': '#2da1ff',
       },
-      background: {
-        default: paletteMode === 'light' ? '#F1F6F9' : '#212A3E',
+      index: {
+        default: paletteMode === 'light' ? `url(${require("../Images/dark.png")})` : `url(${require("../Images/light.png")})`
+      },
+      background:{
+        default: paletteMode === 'light' ? `url(${require("../Images/D.png")})` : `url(${require("../Images/L.png")})`
       },
     },
     

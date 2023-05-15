@@ -3,19 +3,25 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-  
     color: theme.palette.primary.main,
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    width: '100vw',
+  },
+  backgroundImage: {
+    position: "fixed",
+    top: 0,
+    backgroundImage: theme.palette.background.default,
     zIndex: -1,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    backgroundImage: theme.palette.background.default,
-    width: '100vw',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+
   container: {
     padding: '24px',
     borderRadius: '8px',
@@ -41,6 +47,7 @@ const AboutPage = () => {
   const classes = useStyles();
 
   return (
+    <div className={classes.backgroundImage}> 
     <div className={classes.root}>
       <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={4}>
@@ -63,6 +70,7 @@ const AboutPage = () => {
           </Grid>
         </Grid>
       </Container>
+    </div>
     </div>
   );
 };

@@ -2,115 +2,71 @@ import AddTask from "../TasksComponent/AddTask";
 import { useState, useEffect, useCallback } from "react";
 import TasksList from "../TasksComponent/TasksList";
 
-import jwt from 'jwt-decode'
-import { useNavigate } from 'react-router-dom';
+import jwt from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { Button, Paper, Typography } from "@mui/material";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: theme.palette.background.default,
     color: theme.palette.primary.main,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    position: "fixed",
+    top: 0,
+    backgroundImage: theme.palette.background.default,
     zIndex: -1,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    width: '100vw',
-    height: '100vh',
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    width: "100vw",
+    height: "100vh",
+    
   },
+  accent: {
+    color: theme.palette.secondary.main,
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: "50%",
+    marginTop: theme.spacing(2),
+  padding: "10px",
+  backgroundColor: theme.palette.background.default,
+  borderRadius: "5px",
  
-  addButton: {
-    marginTop: '20px',
-    padding: '10px',
-    backgroundColor: theme.palette.primary.main,
-    border: 'none',
-    borderRadius: '5px',
-    color: '#fff',
-    fontSize: '16px',
-    cursor: 'pointer',
-    
-  },
-  clearButton: {
-    marginTop: '20px',
-    padding: '10px',
-    backgroundColor: '#f1c40f',
-    border: 'none',
-    borderRadius: '5px',
-    color: '#fff',
-    fontSize: '16px',
-    cursor: 'pointer',
-    marginLeft: '10px',
-    
-  },
-  goToProject: {
-    marginTop: '20px',
-    padding: '10px',
-    border: 'none',
-    borderRadius: '5px',
-    color: '#fff',
-    fontSize: '16px',
-    cursor: 'pointer',
-    marginLeft: '10px',
-    
   },
   tasksManager: {
     background: theme.palette.background.default,
     color: theme.palette.primary.main,
-    border: '1px solid #ccc',
-    margin: theme.spacing(2), 
-    borderRadius: '5px',
-    width: '90%',
+    boxshadow: "5px 10px #888888",
+    margin: theme.spacing(2),
+    borderRadius: "20px",
+    width: "80%",
+    
   },
   heading: {
     color: theme.palette.primary.main,
     marginTop: "20px",
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
     backgroundImage: theme.palette.background.default,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  addTask: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '80%',
-    marginTop: '20px',
-  },
-  input: {
-    width: '100%',
-    marginBottom: '10px',
-    padding: '10px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  },
-  addButtonModal: {
-    backgroundColor: theme.palette.primary.main,
-    border: 'none',
-    borderRadius: '5px',
-    color: '#fff',
-    fontSize: '16px',
-    cursor: 'pointer',
-    padding: '10px',
   },
 }));
 
-
 export default function DashBoard() {
-
- 
   const [openAddModal, setOpenAddModal] = useState(false);
   const [tasks, setTasks] = useState([]);
-  
+
   const userToken = jwt(localStorage.getItem("token"));
-  
-  const isProjectPart = userToken && (userToken.user.IsAdmin === 1 || userToken.user.IsPartOfProject === 1);
+
+  const isProjectPart =
+    userToken &&
+    (userToken.user.IsAdmin === 1 || userToken.user.IsPartOfProject === 1);
 
   const fetchData = useCallback(async () => {
     try {
@@ -146,75 +102,96 @@ export default function DashBoard() {
 
   const clearCompletedTasks = async () => {
     try {
-      await fetch('http://localhost:80/my-taskmanager/api/delete-completed-tasks', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('token'),
-        },
-      });
-      const confirmed = window.confirm("Take a last look at all your progress today, GOOD JOB!")
-      if(confirmed){
+      await fetch(
+        "http://localhost:80/my-taskmanager/api/delete-completed-tasks",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+      const confirmed = window.confirm(
+        "Take a last look at all your progress today, GOOD JOB!"
+      );
+      if (confirmed) {
         handleModification(); // update the list of tasks
       }
-        
     } catch (error) {
       console.error(error);
-      window.alert("You have not completed anything yet")
+      window.alert("You have not completed anything yet");
     }
-  }
-  
+  };
+
   const showClearCompletedAlert = () => {
-    const confirmed = window.confirm("Are you sure you want to delete all completed tasks?");
+    const confirmed = window.confirm(
+      "Are you sure you want to delete all completed tasks?"
+    );
     if (confirmed) {
       clearCompletedTasks();
     }
-  }
+  };
 
   const navigate = useNavigate();
 
   const goToProjectPage = () => {
-    navigate('/projects');
+    navigate("/projects");
   };
 
-
-
- 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Typography variant="h2">User dashboard page</Typography>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography sx={{marginTop:"20vh" , alignItems:'start'}} variant="h2">USER <span className={classes.accent}>DASHBOARD</span> </Typography>
+        <div className={classes.buttonContainer}>
+          <Button
+            className={classes.button}
+            onClick={() => setOpenAddModal(true)}
+            variant="outlined"
+          >
+            <strong>Add Task +</strong>
+          </Button>
 
-      <Button className={classes.addButton} onClick={() => setOpenAddModal(true)}  variant="outlined" >
-      <strong>Add Task +</strong>
-      </Button>
+          <Button
+            className={classes.button}
+            onClick={() => showClearCompletedAlert()}
+            variant="outlined"
+          >
+            <strong>Clear Completed</strong>
+          </Button>
 
-      <Button className={classes.clearButton} onClick={() => showClearCompletedAlert()}  variant="outlined">
-      <strong>Clear Completed</strong>
-      </Button>
+          {isProjectPart && (
+            <Button
+              className={classes.button}
+              onClick={() => goToProjectPage()}
+              variant="outlined"
+            >
+              <strong>Go to project</strong>
+            </Button>
+          )}
+        </div>
 
-      {isProjectPart && (
-        <Button className={classes.goToProject} onClick={() => goToProjectPage()}  variant="outlined">
-          <strong>Go to project</strong>
-        </Button>
-      )}
+        <Paper className={classes.tasksManager}>
+          <Typography variant="h3" className={classes.heading}>
+            Task List:
+          </Typography>
+
+          <TasksList
+            tasks={tasks}
+            onEdit={handleModification}
+            onComplete={handleModification}
+          />
+
+          {openAddModal && (
+            <AddTask
+              onTaskAdded={handleModification}
+              onClose={() => setOpenAddModal(false)}
+              open={openAddModal}
+            />
+          )}
+        </Paper>
       </div>
-
-    
-
-      <Paper className={classes.tasksManager}>
-        <Typography variant="h3" className={classes.heading}>
-          Task List:
-        </Typography>
-
-        <TasksList tasks={tasks} onEdit={handleModification} onComplete={handleModification} />
-
-        {openAddModal && (
-           <AddTask onTaskAdded={handleModification} onClose={() => setOpenAddModal(false)} open={openAddModal} />
-        )}
-      </Paper>
-    </div>
+  
   );
 }

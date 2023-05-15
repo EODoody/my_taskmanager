@@ -5,19 +5,22 @@ import { Typography, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-  profile: {
-    backgroundImage: theme.palette.background.default,
-    width: "100vw",
-    height: "100vh",
+  root: {
+    color: theme.palette.primary.main,
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: theme.palette.text.primary,
     flexDirection: "column",
-    padding: "24px",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    position: "fixed",
+    top: 0,
+    backgroundImage: theme.palette.background.default,
+    zIndex: -1,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
   },
   heading: {
     marginBottom: "24px",
@@ -43,7 +46,7 @@ export default function Profile() {
   const userToken = jwt(localStorage.getItem("token"));
 
   return (
-    <div className={classes.profile}>
+    <div className={classes.root}>
       <Typography variant="h1" className={classes.heading}>
         Profile
       </Typography>

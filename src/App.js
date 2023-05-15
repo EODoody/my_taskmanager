@@ -18,6 +18,7 @@ import ProjectsPage from './Pages/ProjectsPage';
 import ProjectsList from './ProjectsComponents/ProjectsList';
 import useCustomTheme from './Pages/useCustomTheme';
 import AnalyticsPage from './Pages/AnalyticsPage';
+import Modal from './Pages/Modal';
 
 
 

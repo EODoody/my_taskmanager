@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   AppBar,
@@ -11,23 +11,18 @@ import {
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    backgroundColor: "rgba(0, 0, 0, 0)",
-    boxShadow: "none",
-  },
-  toolbar: {
-    backgroundColor: "rgba(0, 0, 0, 0)",
-  },
   link: {
     textDecoration: "none",
-    color: theme.palette.mode === "dark" ? "#fff" : "#000",
+    color: theme.palette.primary.main,
     marginLeft: "rem",
+  },
+  accent: {
+    color: theme.palette.secondary.main,
   },
   button: {
     alignSelf: "center",
     paddingBottom: "10px",
     marginLeft: "20%",
-    color: theme.palette.mode === "dark" ? "#fff" : "#000",
   },
   paletteModeButton: {
     display: "inline-block",
@@ -35,8 +30,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar({ authenticated, handleLogout, paletteMode, handleTogglePaletteMode }) {
+function Navbar({
+  authenticated,
+  handleLogout,
+  paletteMode,
+  handleTogglePaletteMode,
+}) {
   const classes = useStyles();
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const handleTogglePaletteModeAndsetIsDarkMode = () => {
+    handleTogglePaletteMode(); // Call the first function
+    setIsDarkMode(!isDarkMode);
+    // ...
+  };
 
   const menuItems = [
     { label: "About", path: "/about" },
@@ -54,38 +62,66 @@ function Navbar({ authenticated, handleLogout, paletteMode, handleTogglePaletteM
   ];
 
   return (
-    <AppBar position="static" className={classes.appBar}>
-      <Toolbar className={classes.toolbar} sx={{ justifyContent: "space-between" }}>
+    <AppBar
+      position="static"
+      sx={{
+        backgroundColor: "transparent !important",
+        boxShadow: "none",
+        marginBottom: "25px",
+      }}
+    >
+      <Toolbar
+        className={classes.toolbar}
+        sx={{ justifyContent: "space-between" }}
+      >
         <Link to="/" className={classes.link}>
-          <Typography variant="h4" component="div" sx={{ flexGrow: 1, color: "#fff" }}>
-          <img src={require('../Pages/image.jpg')} alt="Logo" style={{ height: '50px' }} /> <strong>Day-o</strong>
+          <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+            <strong>
+              DAY-<span className={classes.accent}>O</span>
+            </strong>
           </Typography>
         </Link>
 
-        <ul className={classes.nav__links}>
+        <ul>
           {menuItems.map((menuItem, index) => (
-            <li key={index} style={{ display: "inline-block", marginLeft: "1rem" }}>
+            <li
+              key={index}
+              style={{ display: "inline-block", marginLeft: "1rem" }}
+            >
               {menuItem.onClick ? (
-                <Button color="inherit" style={{ color: "#fff" }} sx={{ fontSize: "1.2rem" }} className={classes.button} onClick={menuItem.onClick}>
-                  {menuItem.label}
+                <Button
+                  sx={{ fontSize: "1.4rem" }}
+                  className={classes.button}
+                  onClick={menuItem.onClick}
+                >
+                  <strong>{menuItem.label}</strong>
                 </Button>
               ) : (
-                <Link to={menuItem.path} style={{ textDecoration: "none" }}>
-                  <Button color="inherit" style={{ color: "#fff" }} sx={{ fontSize: "1.2rem" }} className={classes.button}>
-                    {menuItem.label}
+                <Link to={menuItem.path}>
+                  <Button
+                    sx={{ fontSize: "1.4rem" }}
+                    className={classes.button}
+                  >
+                    <strong>{menuItem.label}</strong>
                   </Button>
                 </Link>
               )}
             </li>
           ))}
 
-          <li className={classes.paletteModeButton}>
-            <IconButton color="inherit" onClick={handleTogglePaletteMode}>
-              <Switch checked={paletteMode === "dark"} inputProps={{ "aria-label": "Toggle dark mode" }} />
+          <li className={classes.paletteModeButton} style={{marginLeft:"20px"}}>
+            <IconButton
+              color="inherit"
+              onClick={handleTogglePaletteModeAndsetIsDarkMode}
+            >
+              {isDarkMode ? (
+                // Render the dark mode picture
+                <img src={require('../Images/sun.png')} alt="Dark Mode" />
+              ) : (
+                // Render the light mode picture
+                <img src={require('../Images/moon.png')} alt="Light Mode" />
+              )}
             </IconButton>
-            <Typography variant="body1" color="inherit" sx={{ marginLeft: "0.5rem" }}>
-              {paletteMode === "dark" ? "Dark Mode" : "Light Mode"}
-            </Typography>
           </li>
         </ul>
       </Toolbar>

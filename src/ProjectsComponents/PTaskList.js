@@ -22,8 +22,11 @@ import {
       },
       "& .MuiTableRow-root:hover": {
         cursor: "pointer",
-        backgroundColor: theme.palette.action.hover,
       },
+    },
+    scrollable: {
+      maxHeight: "450px", // Adjust the desired maxHeight value
+      overflow: "auto", // Enable scrolling
     },
     todo: {
       backgroundColor: theme.palette.warning.main,
@@ -162,8 +165,8 @@ export default function ProjectDetails({
 
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <Typography variant="h3">Selected project name: {selectedProjectName}</Typography>
+    <div className={`${classes.root} ${classes.scrollable}`}>
+      <Typography variant="h3"> PROJECT NAME: {selectedProjectName}</Typography>
       {projectTasks.length > 0 ? (
         <>
           <div className="tables-container">

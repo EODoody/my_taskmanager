@@ -5,7 +5,7 @@ import { Typography } from "@mui/material";
 const useStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.primary.main,
-    height: "100vh",
+    height: "50vh",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   paper: {
-    padding: theme.spacing(3),
     backgroundColor: 'rgba(128, 128, 128, 0)',
     width: '50%',
     height: '40%',

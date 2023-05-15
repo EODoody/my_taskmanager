@@ -1,7 +1,33 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
+import { makeStyles } from '@mui/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    color: theme.palette.primary.main,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "auto",
+  },
+  backgroundImage: {
+    position: "fixed",
+    top: 0,
+    backgroundImage: theme.palette.background.default,
+    zIndex: -1,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+
+  },
+}))
+
 
 const AnalyticsPage = () => {
+
+  const classes = useStyles()
+
   const chartRef1 = useRef(null);
   const chartRef2 = useRef(null);
 
@@ -61,11 +87,11 @@ const AnalyticsPage = () => {
   }, []);
 
   return (
-    <div style={{width: "30%"}}>
-      <canvas ref={chartRef1} />
-      <canvas ref={chartRef2} />
+    
+      <div className={classes.backgroundImage}>
+      <canvas ref={chartRef1} style={{ width: '300px', height: '300px' }} />
+      <canvas ref={chartRef2} style={{ width: '300px', height: '300px' }} />
       </div>
- 
   );
 };
 

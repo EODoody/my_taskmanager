@@ -6,6 +6,10 @@ import React, { useState, useEffect } from "react";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: theme.spacing(2),
+    overflow: "auto", // Enable scrolling
+  },
+  scrollable: {
+    maxHeight: "300px", // Adjust the desired maxHeight value
   },
   tableHeader: {
     backgroundColor: theme.palette.primary.main,
@@ -68,7 +72,7 @@ export default function ProjectList({ onProjectSelect }) {
   };
 
  return (
-    <Paper className={classes.root}>
+  <Paper className={`${classes.root} ${classes.scrollable}`}>
       <Typography variant="h4" component="h2">
         Projects List
       </Typography>

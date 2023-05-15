@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: 'auto',
     padding: '30px',
     border: `1px solid ${theme.palette.grey[300]}`,
+    color: theme.palette.primary.main,
   },
   modalHeader: {
     display: 'flex',
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     fontSize: '24px',
     fontWeight: 600,
-    color: theme.palette.text.primary,
+    color: theme.palette.primary.main
   },
   modalClose: {
     border: 'none',

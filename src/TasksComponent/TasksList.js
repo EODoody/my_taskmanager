@@ -14,39 +14,33 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  column: {
+    width: '50%',
+    minHeight: "500px",
+    maxHeight:"500px",
+    overflowY: 'auto',
+    padding: '20px',
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.primary.main,
+    
+   
     
   },
   
-  column: {
-    width: '50%',
-    height: '650px',
-    overflowY: 'auto',
-    padding: '16px',
-    backgroundColor: theme.palette.background.default,
-    color: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.divider}`,
-    borderRadius: '4px',
-  },
-  
   uncompleted: {
-    backgroundColor: 'rgb(234, 142, 167)',
-    marginRight: '5px',
+    backgroundColor: 'rgba(25,167,206,0.7)',
+    marginRight: '20px',
+    boxShadow: `7px -5px rgba(20,108,148,0.8)`,
   },
   
   completed: {
-    backgroundColor: 'rgb(86, 200, 172)',
-    marginLeft: '5px',
+    backgroundColor: 'rgba(232,160,191, 0.7)',
+    marginLeft: '20px',
+    boxShadow: `7px -5px rgba(186,144,198,0.8)`,
+    
   },
   
-  columnHover: {
-    borderColor: theme.palette.primary.main,
-  },
-  
-  columnActive: {
-    outline: 'none',
-    borderColor: theme.palette.primary.main,
-    boxShadow: `0 0 0 2px ${theme.palette.primary.light}`,
-  },
 }));
 
 const TasksList = ({ tasks, onEdit, onComplete }) => {

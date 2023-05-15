@@ -6,16 +6,21 @@ import { Link, useNavigate } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    color: theme.palette.primary.main,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    position: "fixed",
+    top: 0,
+    backgroundImage: theme.palette.background.default,
+    zIndex: -1,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    backgroundImage: theme.palette.background.default,
     width: '100vw',
     height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-
   },
   paper: {
     padding: "16px",

@@ -13,16 +13,21 @@ import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    color: theme.palette.primary.main,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    position: "fixed",
+    top: 0,
     backgroundImage: theme.palette.background.default,
+    zIndex: -1,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
-    color: theme.palette.text.primary,
     width: '100vw',
     height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   paper: {
     padding: theme.spacing(2),

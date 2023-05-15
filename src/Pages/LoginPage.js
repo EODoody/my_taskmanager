@@ -4,15 +4,21 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    color: theme.palette.primary.main,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "hidden",
+    position: "fixed",
+    top: 0,
     backgroundImage: theme.palette.background.default,
-    color: theme.palette.text.primary,
-    height: '90vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    zIndex: -1,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
+    width: '100vw',
+    height: '100vh',
   },
   paper: {
     padding: '16px',

@@ -1,97 +1,110 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 import { makeStyles } from '@mui/styles';
+import { useState } from 'react';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     color: theme.palette.primary.main,
-    flexDirection: "column",
+    display: "flex",
     justifyContent: "center",
-    alignItems: "center",
-    overflow: "auto",
+    flexDirection: "column",
+    height: "100vh",
+    width: "100vw",
+    overflow: "auto", 
   },
   backgroundImage: {
     position: "fixed",
     top: 0,
     backgroundImage: theme.palette.background.default,
     zIndex: -1,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
   },
 }))
 
 
 const AnalyticsPage = () => {
-
-  const classes = useStyles()
-
-  const chartRef1 = useRef(null);
-  const chartRef2 = useRef(null);
+  const classes = useStyles();
+  const chartRef = useRef(null);
+  const [data, setData] = useState([]);
+  const [chartInstance, setChartInstance] = useState(null);
 
   useEffect(() => {
-    const ctx1 = chartRef1.current.getContext('2d');
-    const ctx2 = chartRef2.current.getContext('2d');
-
-    // Line Chart
-    const lineChart = new Chart(ctx1, {
-      type: 'line',
-      data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
-        datasets: [
-          {
-            label: 'Progress',
-            data: [10, 20, 30, 25, 40, 35],
-            backgroundColor: 'rgba(75,192,192,0.2)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderWidth: 1,
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:80/my-taskmanager/papi/APget_data`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
           },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-
-    // Pie Chart
-    const pieChart = new Chart(ctx2, {
-      type: 'pie',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow'],
-        datasets: [
-          {
-            data: [10, 20, 30],
-            backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
-            borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-      },
-    });
-
-    // Cleanup the chart instances on component unmount
-    return () => {
-      lineChart.destroy();
-      pieChart.destroy();
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setData(data);
+        } else {
+          throw new Error('Unable to fetch data');
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     };
+
+    fetchData();
   }, []);
 
+  useEffect(() => {
+    if (chartRef.current) {
+      // Destroy the existing chart instance
+      if (chartInstance) {
+        chartInstance.destroy();
+      }
+
+      // Create a new chart instance
+      const ctx = chartRef.current.getContext('2d');
+      const LineChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: data.map((item) => item.project_ID),
+          datasets: [
+            {
+              label: 'Task Count',
+              data: data.map((item) => item.id),
+              backgroundColor: 'rgba(75,192,192,0.2)',
+              borderColor: 'rgba(75,192,192,1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      // Save the new chart instance
+      return() => {
+        LineChart.destroy();};
+      }
+      },[]);
+
+
+
+
+
   return (
-    
-      <div className={classes.backgroundImage}>
-      <canvas ref={chartRef1} style={{ width: '300px', height: '300px' }} />
-      <canvas ref={chartRef2} style={{ width: '300px', height: '300px' }} />
+    <div className={classes.backgroundImage}>
+      <div className={classes.root}>
+        <canvas ref={chartRef}></canvas>
       </div>
+    </div>
   );
 };
 

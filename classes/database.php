@@ -606,4 +606,37 @@ class Database
     // If execution fails or no rows are affected, return false
     return false;
 }
+public function Retrieve_Project_Data() {
+
+    $this->connection = new mysqli(
+        $this->server_name,
+        $this->database_username,
+        $this->database_password,
+        $this->database_name
+    );
+    $this->connection->set_charset('utf8');
+
+    $stmt = $this->connection->prepare("SELECT * FROM audithistory");
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Fetch all rows from the result set
+    $data = array();
+    while ($row = $result->fetch_assoc()) {
+        $line = array(
+            "id" => $row["id"],
+            "project_ID" => $row["project_id"],
+            "user_id" => $row["user_id"],
+            "due_date" => $row["due_date"],
+            "is_completed" => $row["is_completed"]
+        );
+        array_push($data, $line);
+    }
+   
+    $stmt->close();
+    $this->connection->close();
+
+    // Return the retrieved data
+    return $data;
+}
 }

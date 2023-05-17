@@ -5,7 +5,6 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Switch,
   Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";

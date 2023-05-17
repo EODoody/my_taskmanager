@@ -191,6 +191,17 @@ if ($action === 'get-projects') {
             return_json(['status' => 1]);
         }
     }
+}else if ($action === 'APget_data') {
+    if ($is_jwt_valid) {
+        header("Access-Control-Allow-Origin: http://localhost:3000");
+
+        // Perform the necessary data retrieval logic here
+        if($data = $database->Retrieve_Project_Data()) {
+
+        // Return the data as JSON
+        return_json($data);
+        }
+    }
 }
 
 return_json(['status' => 0]);

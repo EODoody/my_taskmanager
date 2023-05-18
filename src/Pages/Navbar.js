@@ -115,10 +115,10 @@ function Navbar({
             >
               {isDarkMode ? (
                 // Render the dark mode picture
-                <img src={require('../Images/sun.png')} alt="Dark Mode" />
+                <img src={require('../Images/moon.png')} alt="Dark Mode" />
               ) : (
                 // Render the light mode picture
-                <img src={require('../Images/moon.png')} alt="Light Mode" />
+                <img src={require('../Images/sun.png')} alt="Light Mode" />
               )}
             </IconButton>
           </li>

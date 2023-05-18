@@ -148,7 +148,7 @@ export default function DashBoard() {
           <Button
             className={classes.button}
             onClick={() => setOpenAddModal(true)}
-            variant="outlined"
+            variant="contained"
           >
             <strong>Add Task +</strong>
           </Button>
@@ -156,7 +156,7 @@ export default function DashBoard() {
           <Button
             className={classes.button}
             onClick={() => showClearCompletedAlert()}
-            variant="outlined"
+            variant="contained"
           >
             <strong>Clear Completed</strong>
           </Button>
@@ -165,7 +165,7 @@ export default function DashBoard() {
             <Button
               className={classes.button}
               onClick={() => goToProjectPage()}
-              variant="outlined"
+              variant="contained"
             >
               <strong>Go to project</strong>
             </Button>

@@ -101,7 +101,7 @@ export default function Profile() {
           </div>
         </Paper>
       )}
-      <Link to="/">Home</Link>
+      
     </div>
   );
 }

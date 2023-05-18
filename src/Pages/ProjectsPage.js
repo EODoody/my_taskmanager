@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     marginLeft: theme.spacing(10),
     flexDirection: "column",
+    
     "& button": {
       margin: theme.spacing(1),
       padding: theme.spacing(2),
@@ -49,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
       marginBottom: theme.spacing(2),
       marginLeft: theme.spacing(2),
+      
     },
   },
   listContainer: {
@@ -130,7 +132,7 @@ export default function ProjectsPage() {
             )}
             <ProjectsList onProjectSelect={handleProjectSelect} />
           </div>
-          <div style={{ width: "40%", zIndex: "20" }}>
+          <div style={{ width: "40%" }}>
             
             {isAdmin && (
               <div className={classes.buttonContainer}>

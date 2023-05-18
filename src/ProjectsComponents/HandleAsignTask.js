@@ -5,10 +5,23 @@ import { FormControl, InputLabel, Select ,MenuItem ,Box, Button, Typography } fr
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles((theme) => ({
+  modalContainer: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    zIndex: 9999, // Set a higher zIndex value for the modal container
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 200,
     color: theme.palette.text.primary,
+    zIndex: 20,
   },
   button: {
     marginLeft: 'auto',
@@ -85,7 +98,8 @@ export default function HandleAsignTask({ selectedProjectId, taskid, onClose, op
 
   const classes=useStyles();
   return (
-      <Modal modalLabel='Assign User To Task' onClose={onClose} open={open}>
+    <div className={classes.modalContainer}>
+      <Modal modalLable="Assign User To Task" onClose={onClose} open={open}>
         <Typography className={classes.formControl}> Select a user from the dropdown below </Typography>
         <form onSubmit={handleSubmit}>
           <FormControl className={classes.formControl} fullWidth>
@@ -114,6 +128,7 @@ export default function HandleAsignTask({ selectedProjectId, taskid, onClose, op
           </Box>
         </form>
       </Modal>
+      </div>
     );
   }
 

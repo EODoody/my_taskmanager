@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 0,
+    zIndex: 50,
     opacity: 0,
     pointerEvents: 'none',
     transition: 'opacity 0.3s',
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     bottom: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    zIndex: -1,
+    
   },
   modalContent: {
     background: theme.palette.background.default,
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '30px',
     border: `1px solid ${theme.palette.grey[300]}`,
     color: theme.palette.primary.main,
+    zIndex: 100,
   },
   modalHeader: {
     display: 'flex',

@@ -1,6 +1,8 @@
 import jwt from "jwt-decode";
 import { Typography, Paper } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,8 +42,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile() {
-  const classes = useStyles();
+  const classes = useStyles();const navigate = useNavigate();
   const userToken = jwt(localStorage.getItem("token"));
+
+  useEffect(() => {
+    if (userToken && userToken.user.status === 0) {
+      window.confirm("Please confirm your account.");
+      navigate("/confirm");
+    }
+  }, [navigate,userToken]);
 
   return (
     <div className={classes.root}>

@@ -21,14 +21,11 @@ import AnalyticsPage from './Pages/AnalyticsPage';
 
 
 
-
-
-
 function App() {
 
   const [authenticated, setAuthenticated] = useState(!!localStorage.getItem('token'));
-
   const { theme, paletteMode, togglePaletteMode } = useCustomTheme();
+
   
   const handleTogglePaletteMode = () => {
     togglePaletteMode();
@@ -86,6 +83,7 @@ function App() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setAuthenticated(false);
+    
     
   };
 

@@ -120,6 +120,7 @@ function Navbar({
                 // Render the light mode picture
                 <img src={require('../Images/moon.png')} alt="Light Mode" />
               )}
+              
             </IconButton>
           </li>
         </ul>

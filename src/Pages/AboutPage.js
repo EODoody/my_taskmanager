@@ -53,17 +53,33 @@ const AboutPage = () => {
         <Grid container spacing={4}>
           <Grid item xs={12} md={8}>
             <Typography variant="h2" gutterBottom className={classes.title}>About Us</Typography>
-            <Typography variant="body1" className={classes.aboutText}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in pulvinar lectus, non tempus lectus.
-              Nulla suscipit tincidunt libero sit amet eleifend. Sed porttitor urna vel enim posuere vestibulum.
+            <Typography variant="h5" className={classes.aboutText}>
+            Welcome to the world of task management! My name is David-Eduard Olteanu,
+            and I'm an Informatics and Economics student. This is my thesis
+            project for the final year, and I'm excited to present to you my
+            innovative and efficient task manager application.
+            With DAY-O, my task manager app will revolutionize the way
+            you organize your tasks, boost your productivity, and stay on top
+            of your goals. It combines the power of cutting-edge technology,
+            intuitive design, and user-friendly features to provide you with a
+            seamless task management experience.
+            Whether you're a busy professional, a student juggling multiple
+            assignments, or simply someone who wants to stay organized, DAY-O
+            is the ultimate solution. It offers a wide range of features,
+            including task creation, deadline tracking,
+            collaboration with team members, and insightful analytics to track
+            your progress.
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Card className={classes.card}>
               <CardContent>
-                <Typography variant="h4" component="h2" gutterBottom>Lorem Ipsum</Typography>
-                <Typography variant="body2">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut sapien eget ligula eleifend vulputate.
+                
+                <Typography variant="h4">
+                Join us on this journey and take control of your tasks like never
+                before. Experience the power of <span>DAY-O</span> and witness a
+                transformation in your productivity. Get started today and unlock
+                your true potential!
                 </Typography>
               </CardContent>
             </Card>

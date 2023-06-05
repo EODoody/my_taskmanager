@@ -304,7 +304,7 @@ class Database
         $stmt->bind_param("ii", $user_id, $status);
         $stmt->execute();
         $result = $stmt->get_result();
-        return $result->fetch_assoc();
+        return $result;
     }
     public function Get_Projects_Fromdb($user_id, $get_all = false)
     {

@@ -119,12 +119,14 @@ export default function ForgotPassword() {
             label="Username or Email"
             type="text"
             value={username}
+            fullWidth
             onChange={usernameHandler}
             className={classes.textField}
           />
           <TextField
             label="New Password"
             type="password"
+            fullWidth
             value={newPassword}
             onChange={newPasswordHandler}
             className={classes.textField}
@@ -132,12 +134,14 @@ export default function ForgotPassword() {
           <TextField
             label="Confirm New Password"
             type="password"
+            fullWidth
             value={confirmNewPassword}
             onChange={confirmNewPasswordHandler}
             className={classes.textField}
           />
           <Button
             variant="contained"
+            fullWidth
             color="primary"
             type="submit"
             className={classes.button}

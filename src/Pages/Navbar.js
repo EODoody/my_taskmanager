@@ -37,7 +37,7 @@ function Navbar({
 }) {
   const classes = useStyles();
 
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState();
 
   const handleTogglePaletteModeAndsetIsDarkMode = () => {
     handleTogglePaletteMode(); // Call the first function
@@ -113,7 +113,7 @@ function Navbar({
               color="inherit"
               onClick={handleTogglePaletteModeAndsetIsDarkMode}
             >
-              {isDarkMode ? (
+              {localStorage.getItem("paletteMode")==="dark" ? (
                 // Render the dark mode picture
                 <img src={require('../Images/sunpictogram.png')} alt="Dark Mode" />
               ) : (

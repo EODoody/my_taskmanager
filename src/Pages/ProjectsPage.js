@@ -65,14 +65,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ProjectsPage() {
+  
   const [isAdmin, setIsAdmin] = useState(false);
+
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [selectedProjectName, setSelectedProjectName] = useState(null);
-  const [openProjectManagementModal, setOpenProjectManagementModal] =
-    useState(false);
+
+  const [openProjectManagementModal, setOpenProjectManagementModal] = useState(false);
   const [openTeamManagementModal, setOpenTeamManagementModal] = useState(false);
-  const [openPTasksManagementModal, setOpenPTasksManagementModal] =
-    useState(false);
+  const [openPTasksManagementModal, setOpenPTasksManagementModal] = useState(false);
+
   const [teamMembers, setTeamMembers] = useState([]);
 
   const updateTeamMembers = useCallback((members) => {

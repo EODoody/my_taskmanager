@@ -26,11 +26,12 @@ function ProjectManagement({ onClose, open, onProjectCreated }) {
       });
       const newProject = await response.json();
       onProjectCreated(newProject);
-      window.location.reload(); // Refresh the page
+      
     }
     catch (error) {
       console.log(error.message)
     }
+    window.location.reload(); // Refresh the page
   }
   
    const submitHandler = async (event) => {

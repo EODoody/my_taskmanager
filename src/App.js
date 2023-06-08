@@ -103,7 +103,7 @@ function App() {
     <BrowserRouter>
         <Navbar authenticated={authenticated} handleLogout={handleLogout} paletteMode={paletteMode} handleTogglePaletteMode={handleTogglePaletteMode}/>
         <Routes>
-          
+    
           <Route exact path="/" element={ <ThemeProvider theme={theme}><IndexPage /></ThemeProvider>} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<Contact />} />

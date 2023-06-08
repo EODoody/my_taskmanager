@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(1),
     padding: theme.spacing(2),
     boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.16)",
-    zIndex: 1, // Add this line
+    zIndex: 1, 
   },
   completed: {
     backgroundColor: "#f5f5f5",

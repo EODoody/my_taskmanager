@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     flexDirection: "column",
-    height: "100vh",
+    minHeight: "100vh", // Changed height to minHeight
     width: "100vw",
     overflow: "auto", 
   },

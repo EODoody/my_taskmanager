@@ -25,7 +25,7 @@ import {
       },
     },
     scrollable: {
-      maxHeight: "450px", // Adjust the desired maxHeight value
+      maxHeight: "400px", // Adjust the desired maxHeight value
       overflow: "auto", // Enable scrolling
     },
     todo: {

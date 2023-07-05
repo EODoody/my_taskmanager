@@ -1,5 +1,5 @@
-import { Container, Grid, Card, CardContent, Typography } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Container, Grid, Card, CardContent, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -10,36 +10,36 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
-    width: '100vw',
+    width: "100vw",
   },
   backgroundImage: {
     position: "fixed",
     top: 0,
     backgroundImage: theme.palette.background.default,
     zIndex: -1,
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
   },
 
   container: {
-    padding: '24px',
-    borderRadius: '8px',
-    boxShadow: '0 0 8px 0 rgba(0,0,0,0.5)',
+    padding: "24px",
+    borderRadius: "8px",
+    boxShadow: "0 0 8px 0 rgba(0,0,0,0.5)",
   },
   aboutText: {
     color: theme.palette.primary.main,
-    fontSize: '18px',
+    fontSize: "18px",
   },
   title: {
     color: theme.palette.primary.main,
   },
   card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    borderRadius: '8px',
-    boxShadow: '0 0 8px 0 rgba(0,0,0,0.5)',
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    borderRadius: "8px",
+    boxShadow: "0 0 8px 0 rgba(0,0,0,0.5)",
   },
 }));
 
@@ -47,46 +47,37 @@ const AboutPage = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.backgroundImage}> 
-    <div className={classes.root}>
-      <Container maxWidth="lg" className={classes.container}>
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={8}>
-            <Typography variant="h2" gutterBottom className={classes.title}>About Us</Typography>
-            <Typography variant="h5" className={classes.aboutText}>
-            Welcome to the world of task management! My name is David-Eduard Olteanu,
-            and I'm an Informatics and Economics student. This is my thesis
-            project for the final year, and I'm excited to present to you my
-            innovative and efficient task manager application.
-            With DAY-O, my task manager app will revolutionize the way
-            you organize your tasks, boost your productivity, and stay on top
-            of your goals. It combines the power of cutting-edge technology,
-            intuitive design, and user-friendly features to provide you with a
-            seamless task management experience.
-            Whether you're a busy professional, a student juggling multiple
-            assignments, or simply someone who wants to stay organized, DAY-O
-            is the ultimate solution. It offers a wide range of features,
-            including task creation, deadline tracking,
-            collaboration with team members, and insightful analytics to track
-            your progress.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Card className={classes.card}>
-              <CardContent>
+    <div className={classes.backgroundImage}>
+      <div className={classes.root}>
+        <Container maxWidth="lg" className={classes.container}>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={8}>
+              <Typography variant="h2" gutterBottom className={classes.title}>
+                About Us
+              </Typography>
+              <Typography variant="h5" className={classes.aboutText}>
+                Gestionarea eficientă a task-urilor este esențială într-o lume
+                aglomerată și dinamică, în care timpul este un resursă
+                prețioasă. Fie că suntem implicați în proiecte profesionale sau
+                avem sarcini personale de îndeplinit, capacitatea de a organiza
+                și prioritiza task-urile devine crucială pentru a atinge
+                succesul și satisfacția în activitățile noastre.
                 
-                <Typography variant="h4">
-                Join us on this journey and take control of your tasks like never
-                before. Experience the power of <span>DAY-O</span> and witness a
-                transformation in your productivity. Get started today and unlock
-                your true potential!
-                </Typography>
-              </CardContent>
-            </Card>
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography variant="h4">
+                    Get started today and unlock your true
+                    potential!
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </div>
+        </Container>
+      </div>
     </div>
   );
 };
